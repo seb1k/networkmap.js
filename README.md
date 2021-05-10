@@ -26,7 +26,6 @@ You can now :
 It's an unfinished version, but it work WAY better than the original project.
 
 
-https://raw.githubusercontent.com/seb1k/networkmap.js/master/img/networkmap.png
 
 ![screenshot](img/networkmap.png)
 
