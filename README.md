@@ -18,9 +18,9 @@ You can now :
 - Save your networkmap
 - Do requests from your browser ( and the server when CORS is blocking the request )
 - use .rrd file.
+- More soon...
 
-
-
+<br/><br/><br/>
 
 It's an unfinished version, but it work WAY better than the original project.
 
