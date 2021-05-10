@@ -1,7 +1,7 @@
 
 
 I needed a network map tool for my job...
-networkmap.js had a good design, so U used it.
+networkmap.js had a good design, so I used it.
 
 But it's buggy as HELL !
 
