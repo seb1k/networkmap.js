@@ -1,0 +1,255 @@
+{
+    "defaults": {
+        "graph": {
+            "utilizationLabels": {
+                "enabled": true,
+                "fontSize": 8,
+                "padding": 2
+            }
+        },
+        "node": {},
+        "link": {}
+    },
+    "nodes": [
+        {
+            "id": "node2",
+            "name": "node2",
+            "x": 770,
+            "y": 110,
+            "renderer": "rect",
+            "information": {
+                "test": "some value"
+            },
+            "label": {
+                "position": "internal",
+                "visable": "true"
+            },
+            "padding": "12"
+        },
+        {
+            "id": "node4",
+            "name": "node4",
+            "x": 460,
+            "y": 100,
+            "renderer": "rect",
+            "label": {
+                "position": "internal",
+                "visable": "true"
+            },
+            "padding": "12"
+        },
+        {
+            "id": "node1",
+            "name": "node1",
+            "x": 610,
+            "y": 250,
+            "renderer": "rect",
+            "label": {
+                "position": "internal",
+                "visable": "true"
+            },
+            "padding": "12"
+        },
+        {
+            "id": "node3",
+            "name": "node3",
+            "x": 780,
+            "y": 360,
+            "renderer": "rect",
+            "label": {
+                "position": "internal",
+                "visable": "true"
+            },
+            "padding": "12"
+        },
+        {
+            "id": "node5",
+            "name": "node5",
+            "x": 460,
+            "y": 360,
+            "renderer": "rect",
+            "label": {
+                "position": "internal",
+                "visable": "true"
+            },
+            "padding": "12"
+        }
+    ],
+    "links": [
+        {
+            "inset": "10",
+            "connectionDistance": "10",
+            "staticConnectionDistance": "30",
+            "arrowHeadLength": "10",
+            "width": "10",
+            "background": "#777",
+            "nodeA": {
+                "id": "node2",
+                "name": "Gi0\/1",
+                "requestUrl": "http:\/\/random_data",
+                "requestData": {
+                    "hostname": "node1",
+                    "column": "1"
+                },
+                "error": ""
+            },
+            "nodeB": {
+                "id": "node4",
+                "name": "Gi0\/1",
+                "requestUrl": "http:\/\/random_data",
+                "requestData": {
+                    "hostname": "node1",
+                    "column": "1"
+                },
+                "error": ""
+            }
+        },
+        {
+            "inset": "10",
+            "connectionDistance": "10",
+            "staticConnectionDistance": "30",
+            "arrowHeadLength": "10",
+            "width": "10",
+            "background": "#777",
+            "nodeA": {
+                "id": "node4",
+                "name": "Gi0\/1",
+                "requestUrl": "http:\/\/random_data",
+                "requestData": {
+                    "hostname": "node1",
+                    "column": "1"
+                },
+                "error": ""
+            },
+            "nodeB": {
+                "id": "node1",
+                "name": "Gi0\/1",
+                "requestUrl": "http:\/\/random_data",
+                "requestData": {
+                    "hostname": "node1",
+                    "column": "1"
+                },
+                "error": ""
+            }
+        },
+        {
+            "inset": "10",
+            "connectionDistance": "10",
+            "staticConnectionDistance": "30",
+            "arrowHeadLength": "10",
+            "width": "10",
+            "background": "#777",
+            "nodeA": {
+                "id": "node5",
+                "name": "Gi0\/1",
+                "requestUrl": "http:\/\/random_data",
+                "requestData": {
+                    "hostname": "node1",
+                    "column": "1"
+                },
+                "error": ""
+            },
+            "nodeB": {
+                "id": "node1",
+                "name": "Gi0\/1",
+                "requestUrl": "http:\/\/random_data",
+                "requestData": {
+                    "hostname": "node1",
+                    "column": "1"
+                },
+                "error": ""
+            }
+        },
+        {
+            "inset": "10",
+            "connectionDistance": "10",
+            "staticConnectionDistance": "30",
+            "arrowHeadLength": "10",
+            "width": "10",
+            "background": "#777",
+            "nodeA": {
+                "id": "node1",
+                "name": "Gi0\/1",
+                "requestUrl": "http:\/\/random_data",
+                "requestData": {
+                    "hostname": "node1",
+                    "column": "1"
+                },
+                "edge": {
+                    "point": {
+                        "x": 669,
+                        "y": 270.75
+                    },
+                    "pointer": {
+                        "x": 24.5,
+                        "y": 0
+                    },
+                    "direction": {
+                        "x": 0.09480909262799544,
+                        "y": 0.9954954725939522
+                    }
+                },
+                "error": ""
+            },
+            "nodeB": {
+                "id": "node3",
+                "name": "Gi0\/1",
+                "requestUrl": "http:\/\/random_data",
+                "requestData": {
+                    "hostname": "node1",
+                    "column": "1"
+                },
+                "error": ""
+            }
+        },
+        {
+            "inset": "10",
+            "connectionDistance": "10",
+            "staticConnectionDistance": "30",
+            "arrowHeadLength": "10",
+            "width": "10",
+            "background": "#777",
+            "nodeA": {
+                "id": "node1",
+                "name": "Gi0\/1",
+                "requestUrl": "http:\/\/random_data",
+                "requestData": {
+                    "hostname": "node1",
+                    "column": "1"
+                },
+                "error": ""
+            },
+            "nodeB": {
+                "id": "node3",
+                "name": "Gi0\/1",
+                "requestUrl": "http:\/\/random_data",
+                "requestData": {
+                    "hostname": "node1",
+                    "column": "1"
+                },
+                "edge": {
+                    "point": {
+                        "x": 792.5,
+                        "y": 377.5
+                    },
+                    "pointer": {
+                        "x": -22,
+                        "y": -3.25
+                    },
+                    "direction": {
+                        "x": 0,
+                        "y": -1
+                    }
+                },
+                "error": ""
+            }
+        }
+    ],
+    "onSave": {
+        "method": "post",
+        "url": "update.php",
+        "data": {
+            "id": "weathermap.json"
+        }
+    }
+}
