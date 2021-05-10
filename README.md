@@ -18,6 +18,7 @@ You can now :
 - Save your networkmap
 - Do requests from your browser ( and the server when CORS is blocking the request )
 - use .rrd file.
+- Use a password to prevent unwanted changes
 - More soon...
 
 <br/><br/><br/>
