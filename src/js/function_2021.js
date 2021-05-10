@@ -14,6 +14,45 @@ var diffY=parseInt(velem[5])
 
 setInterval(function(){ warning_bug_matrix(); }, 500);
 
+//setTimeout(function(){    svg_add_shadow()    }, 300);
+
+function  svg_add_shadow()
+{
+var defs = document.getElementById('SvgjsSvg1000').querySelector('defs');
+var filter = createOn(defs,'filter',{    id:"dropshadowNODE",    height:"180%"});
+var feGaussianBlur = createOn(filter,'feGaussianBlur',{    in:"SourceAlpha",    stdDeviation:"3"});
+var feOffset = createOn(filter,'feOffset',{    dx:2,    dy:2,    result:"offsetblur"});
+var feComponentTransfer = createOn(filter,'feComponentTransfer');
+var feFuncA = createOn(feComponentTransfer,'feFuncA',{    type:"linear",    slope:"0.2"});
+
+var feMerge = createOn(filter,'feMerge');
+var feMergeNode = createOn(feMerge,'feMergeNode');
+var feMergeNode = createOn(feMerge,'feMergeNode',{    in:"SourceGraphic"});
+}
+
+
+function createOn( dad, name, attrs, text ){
+    var svg = dad.ownerSVGElement, doc = dad.ownerDocument;
+    var ns = createOn.$NAMESPACES;
+    var defaultNS = svg.namespaceURI;
+    if (!ns){
+      ns = createOn.$NAMESPACES = {};
+      for (var a=svg.attributes,i=a.length;i--;) if (a[i].prefix=='xmlns') ns[a[i].localName] = a[i].nodeValue;
+    }
+    var p = name.split(':');
+    var el = p[1] ? doc.createElementNS(ns[p[0]],p[1]) : doc.createElementNS(defaultNS,name);
+    for (var a in attrs){
+      p = a.split(':');
+      if (p[1]) el.setAttributeNS(ns[p[0]],p[1],attrs[a]);
+      else      el.setAttributeNS(null,a,attrs[a]);
+    }
+    if (text) el.appendChild(doc.createTextNode(text));
+    return dad.appendChild(el);
+  }
+
+
+
+
 
 function send_password()
 {
@@ -370,7 +409,6 @@ req.open("POST", url, true);
 
 req.onreadystatechange = function() {
     try {
-        log(req.status)
         if(req.status == 200)
             {
 
@@ -446,8 +484,15 @@ var timeout_grab_data = false;
 function start_timeout_grab_data()
 {
 clearTimeout(timeout_grab_data);
-timeout_grab_data = setTimeout(function(){    go_grab_data()    }, 300);
+timeout_grab_data = setTimeout(function(){    go_interval()    }, 300);
 }
+
+function go_interval()
+{
+setInterval(function(){go_grab_data(); }, map.properties.properties.refreshInterval*1000);
+go_grab_data();
+}
+
 
 function go_grab_data()
 {

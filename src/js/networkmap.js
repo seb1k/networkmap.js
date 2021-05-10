@@ -5523,7 +5523,7 @@ if (objCtr.defineProperty) {
 networkMap.path = function(svg){
 	return svg.path().attr({ 
 		fill: '#eee',
-		stroke: '#000'
+		stroke: '#000',filter:"url(#dropshadowNODE)"
 	});
 };
 
@@ -6014,10 +6014,14 @@ networkMap.extend(networkMap.widget.IntegerInput, {
 		this.input.setAttribute('type', 'number');
 
 
-		if(value.value)
+		if(typeof value=="number")
+			this.input.value = value
+		else if(value.value)
 			this.input.value = value.value;
 
+
 		if (value.inherited) this.input.setAttribute('placeholder', value.inherited);
+
 		this.input.addEventListener('change', function(e){
 			/*
 			if (this.input.value === '' && value.inherited){
@@ -7332,7 +7336,7 @@ networkMap.extend(networkMap.ColorLegend, {
 				0, (colormap.length - 1 - index) * this.options.boxSize
 			).attr({
 				stroke:'#000'
-
+				
 			});
 
 			svg.text(Math.round(this.colormap.limits[index].toString()) + '%')
@@ -8059,9 +8063,11 @@ networkMap.extend(networkMap.renderer.link.UtilizationLabel, {
 				var rect = this.rect = svg.rect(1,1)
 					.fill({ color: bgColor})
 					.stroke({ color: strokeColor, width: strokeWidth })
+
 					.attr({ 
 						rx: 2,
-						ry: 2
+						ry: 2,
+						//filter:"url(#dropshadow)"
 					})
 					.size(
 						bboxLabel.width + this.options.padding * 2, 
@@ -8693,7 +8699,7 @@ networkMap.extend(networkMap.Graph, {
 		this.triggerEvent('resize', this);
 		
 		this.onUtilizationLabelsChange();
-		
+
 		return this;
 	},
 
@@ -9241,11 +9247,11 @@ networkMap.extend(networkMap.Graph.Module.Settings, {
 			}.bind(this);
 		}.bind(this);
 	
-		accordionGroup = container.add('Globals',0,0);
+		accordionGroup = container.add('Map properties',0,0);
 		
 
 
-		accordionGroup.appendChild(new networkMap.widget.GridInput('Grid44', {
+		accordionGroup.appendChild(new networkMap.widget.GridInput('Grid', {
 			enabled: graphProperties.get('gridEnabled'),
 			grid: graphProperties.get('grid')
 		}).addEvent('change', function(e){
@@ -9254,12 +9260,17 @@ networkMap.extend(networkMap.Graph.Module.Settings, {
 		
 
 
-		accordionGroup.appendChild(new networkMap.widget.IntegerInput('Refresh every (secs)', {
-			refreshInterval: graphProperties.get('refreshInterval')
-		}).addEvent('change', function(e){
-			log(refreshInterval)
-				graphProperties.set('refreshInterval', 33);
+		accordionGroup.appendChild(new networkMap.widget.IntegerInput('Refresh every (secs)',
+			graphProperties.get('refreshInterval') )
+
+
+		.addEvent('change', function(e){
+				graphProperties.set('refreshInterval', e.value);
 		}.bind(this)));
+
+
+
+
 		
 		accordionGroup = container.add('Utilization Labels',0,0);
 		var utilizationLabels = graphProperties.get('utilizationLabels');
@@ -9268,7 +9279,7 @@ networkMap.extend(networkMap.Graph.Module.Settings, {
 				utilizationLabels.enabled = e.value;
 				graphProperties.set('utilizationLabels', utilizationLabels);	
 			}.bind(this)));
-			
+			log(utilizationLabels.padding)
 		accordionGroup.appendChild(new networkMap.widget.IntegerInput('Padding', utilizationLabels.padding)
 			.addEvent('change', function(e){
 				utilizationLabels.padding = e.value;
@@ -9905,7 +9916,7 @@ networkMap.Node.registerRenderer('rect', function(node, svg) {
 		.stroke({ color: node.options.strokeColor, width: node.options.strokeWidth })
 		.attr({ 
 			rx: 4,
-			ry: 4
+			ry: 4				,filter:"url(#dropshadowNODE)" // NODE
 		})
 		.size(
 			bboxLabel.width + node.options.padding * 2, 
@@ -9926,7 +9937,7 @@ networkMap.Node.registerRenderer('rect', function(node, svg) {
 networkMap.Node.Module.Settings = function(properties, options){
 	this.options = {
 		onlyGlobals: false,
-		header: 'Globals',
+		header: 'Node',
 		container: null,
 		start_open:true
 	};	
@@ -11175,7 +11186,7 @@ networkMap.extend(networkMap.Link, {
 			fill: 'none',
 			stroke: '#000', 
 			'stroke-dasharray': '3,5',
-			'stroke-width': 2 
+			'stroke-width': 2 				,filter:"url(#dropshadowNODE)"
 		});
 	},
 	
@@ -11926,7 +11937,7 @@ networkMap.extend(networkMap.Link.Module.Edge, {
 					.stroke({
 						fill: 'none',
 						color: '#000',
-						width: 2,
+						width: 2
 		
 					});
 					

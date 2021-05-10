@@ -5,7 +5,12 @@
                 "enabled": true,
                 "fontSize": 8,
                 "padding": 2
-            }
+            },
+            "grid": {
+                "xy": 10
+            },
+            "gridEnabled": true,
+            "refreshInterval": 30
         },
         "node": {},
         "link": {}
@@ -14,8 +19,8 @@
         {
             "id": "node2",
             "name": "node2",
-            "x": 770,
-            "y": 110,
+            "x": 570,
+            "y": 50,
             "renderer": "rect",
             "information": {
                 "test": "some value"
@@ -29,8 +34,8 @@
         {
             "id": "node4",
             "name": "node4",
-            "x": 460,
-            "y": 100,
+            "x": 320,
+            "y": 90,
             "renderer": "rect",
             "label": {
                 "position": "internal",
@@ -41,8 +46,8 @@
         {
             "id": "node1",
             "name": "node1",
-            "x": 610,
-            "y": 250,
+            "x": 500,
+            "y": 240,
             "renderer": "rect",
             "label": {
                 "position": "internal",
@@ -53,8 +58,8 @@
         {
             "id": "node3",
             "name": "node3",
-            "x": 780,
-            "y": 360,
+            "x": 670,
+            "y": 350,
             "renderer": "rect",
             "label": {
                 "position": "internal",
@@ -65,8 +70,8 @@
         {
             "id": "node5",
             "name": "node5",
-            "x": 460,
-            "y": 360,
+            "x": 280,
+            "y": 310,
             "renderer": "rect",
             "label": {
                 "position": "internal",
@@ -86,7 +91,7 @@
             "nodeA": {
                 "id": "node2",
                 "name": "Gi0\/1",
-                "requestUrl": "http:\/\/random_data",
+                "requestUrl": "http:\/\/www.worldcraft-online.com\/testnet.php",
                 "requestData": {
                     "hostname": "node1",
                     "column": "1"
@@ -96,7 +101,7 @@
             "nodeB": {
                 "id": "node4",
                 "name": "Gi0\/1",
-                "requestUrl": "http:\/\/random_data",
+                "requestUrl": "http:\/\/www.worldcraft-online.com\/testnet.php",
                 "requestData": {
                     "hostname": "node1",
                     "column": "1"
@@ -177,8 +182,8 @@
                 },
                 "edge": {
                     "point": {
-                        "x": 669,
-                        "y": 270.75
+                        "x": 558.75,
+                        "y": 260.5
                     },
                     "pointer": {
                         "x": 24.5,
@@ -229,8 +234,8 @@
                 },
                 "edge": {
                     "point": {
-                        "x": 792.5,
-                        "y": 377.5
+                        "x": 682.25,
+                        "y": 367.25
                     },
                     "pointer": {
                         "x": -22,

@@ -23,6 +23,7 @@
 				var mySVG;
 
 				// Define a custom node renderer
+				
 				networkMap.Node.registerRenderer("circle", function(node, svg) {
 					var radius = 25;
 					svg.circle(radius * 2).fill({opacity: 1, color: '#ddd'}).stroke({ color: '#000', opacity: 1, width: 2 }).move(radius, radius);
@@ -55,7 +56,7 @@
                     var panZoomTiger = svgPanZoom(document.getElementById("SvgjsSvg1000"), { minZoom: 0.2 });
                 }, 500);
 
-
+			svg_add_shadow()
 
 			});
 
