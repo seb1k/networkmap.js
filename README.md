@@ -1,6 +1,6 @@
 
 
-I needed network map tool for my job...
+I needed a network map tool for my job...
 networkmap.js had a good design, so U used it.
 
 But it's buggy as HELL !
