@@ -14,7 +14,7 @@ I corrected bugs and added a lot of functionality...
 
 You can now :
 
-- Add node / link in the interface.
+- Add nodes / links in the interface.
 - Save your networkmap
 - Use multiple networkmap
 - Do requests from your browser ( and the server when CORS is blocking the request )
