@@ -1,0 +1,151 @@
+{
+    "defaults": {
+        "graph": {
+            "utilizationLabels": {
+                "enabled": true,
+                "fontSize": 12,
+                "padding": 3
+            },
+            "grid": {
+                "xy": 10
+            },
+            "gridEnabled": true,
+            "refreshInterval": 30,
+            "backgroundColor": "#fafafa"
+        },
+        "node": {},
+        "link": {}
+    },
+    "nodes": [
+        {
+            "id": "node1",
+            "name": "node1",
+            "x": 690,
+            "y": 290,
+            "renderer": "rect",
+            "image": "test.png",
+            "label": {
+                "position": "internal",
+                "visable": "true"
+            },
+            "padding": "12"
+        },
+        {
+            "id": "node2",
+            "name": "node2",
+            "x": 500,
+            "y": 110,
+            "renderer": "rect",
+            "image": "test.png",
+            "label": {
+                "position": "internal",
+                "visable": "true"
+            },
+            "padding": "12"
+        },
+        {
+            "id": "node3",
+            "name": "node3",
+            "x": 500,
+            "y": 270,
+            "renderer": "rect",
+            "image": "test.png",
+            "label": {
+                "position": "internal",
+                "visable": "true"
+            },
+            "padding": "12"
+        },
+        {
+            "id": "node4",
+            "name": "node4",
+            "x": 570,
+            "y": 470,
+            "renderer": "rect",
+            "image": "test.png",
+            "label": {
+                "position": "internal",
+                "visable": "true"
+            },
+            "padding": "12"
+        },
+        {
+            "id": "node5",
+            "name": "node5",
+            "x": 910,
+            "y": 420,
+            "renderer": "rect",
+            "image": "test.png",
+            "label": {
+                "position": "internal",
+                "visable": "true"
+            },
+            "padding": "12"
+        }
+    ],
+    "links": [
+        {
+            "nodeA": {
+                "id": "node1",
+                "name": "Gi0\/1",
+                "requestUrl": "http:\/\/random_data",
+                "error": ""
+            },
+            "nodeB": {
+                "id": "node3",
+                "name": "Gi0\/1",
+                "requestUrl": "http:\/\/random_data",
+                "error": ""
+            }
+        },
+        {
+            "nodeA": {
+                "id": "node3",
+                "name": "Gi0\/1",
+                "requestUrl": "http:\/\/random_data",
+                "error": ""
+            },
+            "nodeB": {
+                "id": "node2",
+                "name": "Gi0\/1",
+                "requestUrl": "http:\/\/random_data",
+                "error": ""
+            }
+        },
+        {
+            "nodeA": {
+                "id": "node4",
+                "name": "Gi0\/1",
+                "requestUrl": "http:\/\/random_data",
+                "error": ""
+            },
+            "nodeB": {
+                "id": "node1",
+                "name": "Gi0\/1",
+                "requestUrl": "http:\/\/random_data",
+                "error": ""
+            }
+        },
+        {
+            "nodeA": {
+                "id": "node1",
+                "name": "Gi0\/1",
+                "requestUrl": "http:\/\/random_data",
+                "error": ""
+            },
+            "nodeB": {
+                "id": "node5",
+                "name": "Gi0\/1",
+                "requestUrl": "http:\/\/random_data",
+                "error": ""
+            }
+        }
+    ],
+    "onSave": {
+        "method": "post",
+        "url": "update.php",
+        "data": {
+            "id": "weathermap.json"
+        }
+    }
+}
