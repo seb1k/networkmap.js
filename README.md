@@ -21,6 +21,7 @@ You can now :
 - Request with SNMP, use .rrd file.
 - Use a password to prevent unwanted changes
 - Zoom and move the map (buggy when editing)
+- Use images
 - More soon...
 
 <br/><br/><br/>
