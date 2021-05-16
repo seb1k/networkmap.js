@@ -10,6 +10,7 @@ I corrected bugs and added a lot of functionality...
 <br/>
 <br/><br/>
 
+![screenshot](img/networkmap2.png.png)
 
 
 You can now :
@@ -30,8 +31,9 @@ It's an unfinished version, but it work WAY better than the original project.
 
 
 
-![screenshot](img/networkmap.png)
-![screenshot](img/networkmap2.png.png)
+
+
+
 Original project is here :
 
 https://github.com/otm/networkmap.js
