@@ -6208,7 +6208,6 @@ networkMap.extend(networkMap.widget.BgImage, {
 			}
 
 
-log(value)
 		var txtBtn = "Choose"
 		if(value)
 			txtBtn="Change"
@@ -11528,7 +11527,6 @@ networkMap.extend(networkMap.Link, {
 
 		var path = [];
 		
-		var inset = parseInt(this.properties.get('inset')) || 1;
 		var connectionDistance = parseInt(this.properties.get('connectionDistance')) || 1;
 		var staticConnectionDistance = parseInt(this.properties.get('staticConnectionDistance')) || 1;
 		
@@ -11538,7 +11536,8 @@ networkMap.extend(networkMap.Link, {
 		var ab = b.clone().sub(a);
 		var dirA = ab.clone().maxDir();	
 		var edgePointA = dirA.clone().mul(confinmentA);
-		edgePointA.sub(dirA.clone().scale(inset));
+
+		edgePointA.sub(dirA.clone());
 		var edgePointerA = edgePointA.clone();
 		edgePointA.add(a);
 		
@@ -11548,7 +11547,7 @@ networkMap.extend(networkMap.Link, {
 		var ba = ab.clone().scale(-1);
 		var dirB = ba.clone().maxDir();
 		var edgePointB = dirB.clone().mul(confinmentB);
-		edgePointB.sub(dirB.clone().scale(inset));
+		edgePointB.sub(dirB.clone());
 		var edgePointerB = edgePointB.clone();
 		edgePointB.add(b);
 
@@ -11799,11 +11798,6 @@ networkMap.Link.defaultTemplate = {
 		type: 'number',
 		min: 0
 	},
-	inset: {
-		label: 'Inset',
-		type: 'number',
-		min: 1
-	},
 	connectionDistance: {
 		label: 'Chamfer',
 		type: 'number',
@@ -11855,7 +11849,6 @@ networkMap.Link.registerLinkGenerator(function(sublink){return null;});
 
 /** Register defaults properties for networkMap.Node */
 networkMap.Link.defaults = new networkMap.Properties({
-	inset: 12,
 	connectionDistance: 12,
 	staticConnectionDistance: 32,
 	arrowHeadLength: 10,
@@ -11895,12 +11888,6 @@ networkMap.extend(networkMap.Link.Module.Settings, {
 			label: 'Width',
 			type: 'number',
 			min: 0,
-			global: true
-		},
-		inset: {
-			label: 'Inset',
-			type: 'number',
-			min: 1,
 			global: true
 		},
 		connectionDistance: {
