@@ -4807,7 +4807,6 @@ return SVG
       , y   = this.startPoints.box.y + p.y - this.startPoints.point.y
       , c   = this.constraint
 
-
     this.el.fire('dragmove', { event: e, p: p, m: this.m, handler: this })
 
     // move the element to its new position, if possible by constraint
@@ -4838,7 +4837,6 @@ return SVG
       }
 
     } else if (typeof c == 'object') {
-			warn('CODE used !')
       // keep element within constrained box
       if (c.minX != null && x < c.minX)
         x = c.minX
@@ -4853,6 +4851,7 @@ return SVG
     }
     
     // so we can use it in the end-method, too
+
     return p
   }
 
@@ -4861,6 +4860,8 @@ return SVG
 
     // final drag
     var p = this.drag(e);
+
+
 
     // fire dragend event
 
@@ -5237,8 +5238,8 @@ return SVG
 			p = (arguments.length === 2) ? [p1.x, p1.y, p.x, p.y] : Array.prototype.slice.call(arguments);
 
 			return this.addSegment('Q', p, this._redrawEnabled);
-			var str = ', S' + p2.x + ' ' + p2.x + ', ' + p.x + ' ' + p.y
-			return this.attr('d', this.attr('d') + str);
+		//	var str = ', S' + p2.x + ' ' + p2.x + ', ' + p.x + ' ' + p.y
+		//	return this.attr('d', this.attr('d') + str);
 		},
 		q: function(p1, p){
 			p = (arguments.length === 2) ? [p1.x, p1.y, p.x, p.y] : Array.prototype.slice.call(arguments);
@@ -5594,6 +5595,7 @@ networkMap.Observable = (function(){
 		},
 
 		fireEvent: function(type, args, delay) {
+
 			this.$events = this.$events || {};
 			type = removeOn(type);
 			var events = this.$events[type];
@@ -5842,6 +5844,7 @@ SVG.extend(SVG.math.Point, {
 	roundDir: function(snapAngle){
 		var angle = this.angle();
 		var length = this.len();
+
 		angle = angle - angle % snapAngle;
 		
 		this.x = length * Math.cos(angle);
@@ -6161,9 +6164,81 @@ networkMap.widget.ColorInput = function(label, value, options){
 
 
 
+//BGinfo
+
+networkMap.widget.BgImage = function(label, value, options){
+	this.options = {
+		class: 'nm-input-text',
+		type: 'text'
+	};
+	this.setOptions(options);
+
+	this.$destroy = [];
+
+	this.createElements(label, value);
+};
+
+networkMap.extend(networkMap.widget.BgImage, networkMap.Observable);
+networkMap.extend(networkMap.widget.BgImage, networkMap.Options);
+networkMap.extend(networkMap.widget.BgImage, {	
+	createElements: function(labele, value){
+		var wrapper = this.wrapper = document.createElement('div');
+		wrapper.classList.add(this.options.class);
+
+		var label = this.label = document.createElement('span');
+		this.label.textContent = labele;
+		this.label.style.display = "inline";
 
 
+		var input = this.input = document.createElement('button');
 
+		if(value)
+			{
+			var inputdel = this.inputdel = document.createElement('button');
+			inputdel.setAttribute('type', this.options.type);
+			inputdel.style.float="right"
+			inputdel.textContent="X"
+			inputdel.value=""
+			inputdel.addEventListener('click', function(){
+				dg('but_choose_image').value=""; // ugly hack
+				dg('but_choose_image').textContent="Choose";
+				dg('but_choose_image').dispatchEvent(new CustomEvent("change"));
+				this.style.display="none"
+				})
+			}
+
+
+log(value)
+		var txtBtn = "Choose"
+		if(value)
+			txtBtn="Change"
+		input.setAttribute('type', this.options.type);
+		input.textContent=txtBtn
+		input.style.float="right"
+		input.id="but_choose_image"
+		input.style.float="right"
+		input.addEventListener('click', function(){imagemenu()})
+
+		input.addEventListener('change', function(e){
+			this.fireEvent('change', [e, this]);
+		}.bind(this));
+
+		wrapper.appendChild(label);
+		wrapper.appendChild(input);
+		if(inputdel)
+			wrapper.appendChild(inputdel);
+
+		return this;
+	},
+	
+	value: function(){
+		return (this.input.value !== '') ? this.input.value : undefined;
+	},
+
+	toElement: function(){
+		return this.wrapper;
+	}
+});;networkMap.widget = networkMap.widget || {};
 
 
 
@@ -8109,6 +8184,7 @@ networkMap.extend(networkMap.renderer.link.UtilizationLabel, {
 			render: function(value,link){
 
 
+
 				value = this.value = value || this.value;
 				
 				value = (value === null) ? null : value;
@@ -8128,7 +8204,6 @@ networkMap.extend(networkMap.renderer.link.UtilizationLabel, {
 					{
 					this.svg.show();
 					this.label.text(value_to_txt(value,link));
-					//this.label.text(((value < 10) ? ' ' : '') + Math.round(value) + '%');
 					}
 					
 				this.label.font({
@@ -9326,6 +9401,7 @@ networkMap.extend(networkMap.Graph.Module.Settings, {
 			
 		accordionGroup.appendChild(new networkMap.widget.IntegerInput('Font size', utilizationLabels.fontSize)
 			.addEvent('change', function(e){
+
 				utilizationLabels.fontSize = e.value;
 				graphProperties.set('utilizationLabels', utilizationLabels);	
 			}.bind(this)));
@@ -9726,6 +9802,8 @@ networkMap.extend(networkMap.Node, {
 	 * @return {networkMap.Node} self
 	 */
 	draw: function(){
+
+
 		var redraw = false;
 		
 		if (this.svg){
@@ -9777,6 +9855,7 @@ networkMap.extend(networkMap.Node, {
 		}
 		
 		svg.on('dragstart', function(event){
+			map.settings.purgeEditing() // prevent bug with link
 			this.fireEvent('dragstart');
 		}.bind(this));
 		svg.on('dragmove', function(event){
@@ -9923,6 +10002,7 @@ networkMap.Node.registerRenderer = function(name, f){
 */
 networkMap.Node.registerRenderer('rect', function(node, svg) {
 	// create the label first to get size
+
 	var label = svg.text(node.options.name)
 		.font({
 			family:   node.options.fontFamily,
@@ -9949,19 +10029,33 @@ networkMap.Node.registerRenderer('rect', function(node, svg) {
 	}
 
 	// create the rect
-	bboxLabel = label.bbox();		
-	var rect = svg.rect(1,1)
-		.fill({ color: node.options.bgColor})
-		.stroke({ color: node.options.strokeColor, width: node.options.strokeWidth })
-		.attr({ 
-			rx: 4,
-			ry: 4				,filter:"url(#dropshadowNODE)" // NODE
-		})
-		.size(
-			bboxLabel.width + node.options.padding * 2, 
-			bboxLabel.height + node.options.padding * 2
-		);
-						
+	bboxLabel = label.bbox();
+
+	if(node.options.bgImage)
+		{ //SVG(map.graph.node).image('img.png').move(290,15).back().draggable()
+		var rect = svg.image("img/"+node.options.bgImage)
+			.fill({ color: node.options.bgColor})
+			.stroke({ color: node.options.strokeColor, width: node.options.strokeWidth })
+			.attr({ filter:"url(#dropshadowNODE)" // NODE
+			})
+		
+		if(node.options.bgImage.endsWith(".svg")) // SVG : resize 0.8
+			rect.attr({transform:"scale(0.8)"})
+		}
+	else
+		{
+		var rect = svg.rect(1,1)
+			.fill({ color: node.options.bgColor})
+			.stroke({ color: node.options.strokeColor, width: node.options.strokeWidth })
+			.attr({ 
+				rx: 4,
+				ry: 4				,filter:"url(#dropshadowNODE)" // NODE
+			})
+			.size(
+				bboxLabel.width + node.options.padding * 2, 
+				bboxLabel.height + node.options.padding * 2
+			);
+		}		
 	label.front();
 
 	// this cover is here there to prevent user from selecting 
@@ -10094,6 +10188,11 @@ networkMap.extend(networkMap.Node.Module.Settings, {
 			type: 'text',
 			global: false
 		},
+		bgImage: {
+			label: 'Image',
+			type: 'BgImage',
+			global: false
+		},
 		padding: {
 			label: 'Padding',
 			type: 'number',
@@ -10146,9 +10245,6 @@ networkMap.extend(networkMap.Node.Module.Settings, {
 		var changeHandler = function(key, properties){
 
 			return function(e, widget){
-				log('changeHandler test')
-				log(key)
-				log(properties)
 				properties.set(key, widget.value());	
 			};
 		};
@@ -10158,10 +10254,14 @@ networkMap.extend(networkMap.Node.Module.Settings, {
 
 		accordionGroup = container.add(this.options.header,0,this.options.start_open);
 		networkMap.each(this.parameters, function(option, key){
+
 			if (this.options.onlyGlobals && !option.global)
 				return;
-				
-			if (option.type === 'number'){
+
+			if (option.type === 'BgImage'){
+					accordionGroup.appendChild(new networkMap.widget.BgImage(option.label, properties.get(key), option).addEvent('change', changeHandler(key, properties)));
+				}
+			else if (option.type === 'number'){
 				accordionGroup.appendChild(new networkMap.widget.IntegerInput(option.label, properties.get(key), option).addEvent('change', changeHandler(key, properties)));
 			}
 			else if(option.type === 'text'){
@@ -10989,7 +11089,8 @@ networkMap.extend(networkMap.SubLink, {
 		var midpoint = new SVG.math.Line(this.pathPoints[2], this.pathPoints[3]).midPoint();
 		
 		center = new SVG.math.Line(this.pathPoints[2], midpoint).midPoint();
-		this.utilizationLabel.setPosition(center.x, center.y).render();
+
+		this.utilizationLabel.setPosition(center.x, center.y).render(false,this.getLink());
 
 		center = null;
 		midpoint = null;
@@ -11330,9 +11431,6 @@ networkMap.extend(networkMap.Link, {
 				this,
 				function(response){
 										
-						//log(this.getLink().nodeA.primaryLink.properties.properties.speed)
-						//log(this.getLink().nodeB.primaryLink.properties.properties.speed)
-
 					this.error = response.error
 					this.value = response.value;
 					
@@ -11960,12 +12058,10 @@ networkMap.extend(networkMap.Link.Module.Settings, {
 
 		container.wrapper.insertAdjacentHTML('beforeend',"<div id='simple_menu_html'>"+simple_menu_html(link)+"</div>")
 			
-		var need_sublink_menu = 1;
-		if(need_sublink_menu)
-			{
-			sublinkConf(link.nodeA.options.name, 'nodeA');
-			sublinkConf(link.nodeB.options.name, 'nodeB');
-			}
+
+		sublinkConf(link.nodeA.options.name, 'nodeA');
+		sublinkConf(link.nodeB.options.name, 'nodeB');
+
 
 		/*
 		// Add sublinks
@@ -12031,9 +12127,11 @@ networkMap.Link.Module.Edge = function(svg, bbox, edgePoint, edgeDirection, user
 	}
 	
 
-	this.size = 15;
+	this.size = 18;
 	this.angleSnap = Math.PI / 14;
 	this.pointSnap = 5;
+
+
 
 	this.state = this.states.hidden;
 };
@@ -12113,8 +12211,8 @@ networkMap.extend(networkMap.Link.Module.Edge, {
 				var svg = this.svg;
 				
 				var edge = this.getEdge();
-				
-				var vec = edge.direction.clone().scale(30);
+		
+				var vec = edge.direction.clone().scale(50);
 				vec.add(edge.point);		
 						
 				var line = this.line = svg.line(edge.point.x, edge.point.y, vec.x, vec.y)
@@ -12130,18 +12228,19 @@ networkMap.extend(networkMap.Link.Module.Edge, {
 					.fill('#fff')
 					.stroke({
 						color: '#000'
-					})
+					}).style('cursor', 'move')
+					
 					.draggable(function(x, y){ // Constraint of the draghandle outside box
 						var edge = this.getEdge();
 						var vec2 = networkMap.vec2.create(x, y);
 						
 						var edge2 = edge.point.clone();
-						var res = vec2.sub(edge2).normalize().scale(30);
+						var res = vec2.sub(edge2).normalize().scale(50);
 						res.roundDir(this.angleSnap).add(edge2);
 						
 
-						res.x -= res.x % this.pointSnap
-						res.y -= res.y % this.pointSnap
+						res.x += res.x % this.pointSnap
+						res.y += res.y % this.pointSnap
 
 						return {x: res.x, y: res.y};
 						
@@ -12152,7 +12251,7 @@ networkMap.extend(networkMap.Link.Module.Edge, {
 					.fill('#fff')
 					.stroke({
 						color: '#000'
-					})
+					}).style('cursor', 'move')
 					.center(edge.point.x, edge.point.y)
 					.draggable(function(x, y){
 
@@ -12161,6 +12260,7 @@ networkMap.extend(networkMap.Link.Module.Edge, {
 						var diffX=parseInt(velem[4])
 						var diffY=parseInt(velem[5])
 
+						
 						var bxok = this.bbox.x-diffX
 						var byok = this.bbox.y-diffY
 
@@ -12170,9 +12270,8 @@ networkMap.extend(networkMap.Link.Module.Edge, {
 						y = y > (byok + this.bbox.height - radius) ? byok + this.bbox.height - radius : y ;
 
 							// GRID
-						x -= x % this.pointSnap
-						y -= y % this.pointSnap 
-
+						x += x % this.pointSnap
+						y += y % this.pointSnap 
 
 
 						return {
@@ -12181,7 +12280,7 @@ networkMap.extend(networkMap.Link.Module.Edge, {
 						};
 					}.bind(this));
 					
-		
+
 				svg.on('dblclick', this.onDoubleClick.bind(this));				
 				
 				directionHandle.on('dragstart', this.onDragStart.bind(this));
@@ -12201,6 +12300,7 @@ networkMap.extend(networkMap.Link.Module.Edge, {
 			redraw: function(){
 				var edge = this.getEdge();
 
+					
 
 				if (edge.pointer){
 
@@ -12208,7 +12308,6 @@ networkMap.extend(networkMap.Link.Module.Edge, {
 					var velem = viewportTRansform.split(',')
 					var diffX=parseInt(velem[4])
 					var diffY=parseInt(velem[5])
-
 
 					edge.point = SVG.math.Point.create(this.bbox.cx-diffX, this.bbox.cy-diffY).add(edge.pointer);	
 				}
@@ -12230,9 +12329,11 @@ networkMap.extend(networkMap.Link.Module.Edge, {
 				var edge = this.getEdge();
 				
 				if (edge.pointer){
+
 					edge.point = SVG.math.Point.create(this.bbox.cx, this.bbox.cy).add(edge.pointer);	
 				}
-				var vec = edge.direction.clone().scale(30).add(edge.point);
+				
+				var vec = edge.direction.clone().scale(50).add(edge.point);
 
 				this.line.plot(edge.point.x, edge.point.y, vec.x, vec.y); 
 				this.directionHandle.center(vec.x, vec.y);
@@ -12263,16 +12364,44 @@ networkMap.extend(networkMap.Link.Module.Edge, {
 	},
 
 	onDragStart: function(){
+
 		this.fireEvent('dragstart');
 	},
 	
 	onDragEnd: function(){
+		
+		// DEBUG POINTER (recenter pointer to the middle of the node)
+		if(this.getUserDefined())
+			{
+			var BOXcenter = SVGToScreen(this.bbox.cx, this.bbox.cy)
+		//	var obj = this.getUserDefined()
+
+			var x = this.getUserDefined().point.x-BOXcenter.x
+			var y = this.getUserDefined().point.y-BOXcenter.y
+		//	log(BOXcenter.x+","+BOXcenter.y)
+		//	log(x+","+y)
+		//	x += x % this.pointSnap
+		//	y += y % this.pointSnap
+
+			this.getUserDefined().pointer.x=x
+			this.getUserDefined().pointer.y=y
+			}
+	//	log(x+","+y)
+	//	if(Math.abs(obj.pointer.x)>200)obj.pointer.x=0 //test debug
+	//	if(Math.abs(obj.pointer.y)>200)obj.pointer.y=0 //test debug
+
+
+
 		this.fireEvent('dragend');
 	},
 
 	onDirectionHandleMove: function(event){
 		var edge = this.getEdge();
-		log('setUserDefinedHandleMove')
+
+
+
+
+		
 		this.setUserDefined(
 
 			edge.point,
@@ -12291,11 +12420,24 @@ networkMap.extend(networkMap.Link.Module.Edge, {
 	onEdgeHandleMove: function(event){
 		
 		var edge = this.getEdge();
-		var edgePoint = SVG.math.Point.create(event.target.cx.baseVal.value, event.target.cy.baseVal.value);
+
+		var x = event.target.cx.baseVal.value
+		var y = event.target.cy.baseVal.value
+
+	//	x = rnd(x,this.pointSnap)
+	//	y = rnd(y,this.pointSnap)
+
+		var edgePoint = SVG.math.Point.create(x, y);
 		
+		var cx = this.bbox.cx
+		var cy = this.bbox.cy
+
+	//	cx = rnd(cx,this.pointSnap)
+	//	cy = rnd(cy,this.pointSnap)
+
 		this.setUserDefined(
 			edgePoint,
-			edgePoint.clone().sub(SVG.math.Point.create(this.bbox.cx, this.bbox.cy)),
+			edgePoint.clone().sub(SVG.math.Point.create(cx, cy)),
 			edge.direction
 		);
 		

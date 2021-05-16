@@ -3,31 +3,96 @@
 
 
 /*
-
 var viewportTRansform = document.getElementsByClassName('svg-pan-zoom_viewport')[0].style.transform
 var velem = viewportTRansform.split(',')
 var diffX=parseInt(velem[4])
 var diffY=parseInt(velem[5])
-
 */
+
+// https://github.com/jb-stack/Dia-vrt-sheets
+
+// map.settings.purgeEditing()
+
+
+//SVG(map.graph.node).image('img.png').move(290,15).back().draggable()
+//SVG(map.graph.node).image('img.png').move(290,15).back().draggable()
 
 var cache=[]
 
-
 var link_selected = false;
 
-setTimeout(function(){   document.getElementById('but_nm_trigger').click()   }, 300);
+//setTimeout(function(){   document.getElementById('but_nm_trigger').click()   }, 300);
 
-setInterval(function(){ warning_bug_matrix(); }, 500);
+setInterval(function(){ warning_bug_matrix(); }, 700);
+
+
+function click_div_grey()
+{
+dg('div_grey').style.display="none"
+dg('menu_overlay').style.display="none"
+}
+
+function choose_image(src)
+{
+// Dispatch/Trigger/Fire the event
+dg('but_choose_image').value=src; // ugly hack
+dg('but_choose_image').dispatchEvent(new CustomEvent("change"));
+
+click_div_grey() // close menu
+}
 
 
 
-	
-	
+function imagemenu()
+{
+dg('div_grey').style.display="block"
+dg('menu_overlay').style.display="block"
+
+
+var ret = get_POST_data("snmp_info.php","todo=get_image_menu")
+var imgs = JSON.parse(ret)
+
+var HTML =""
+
+
+for (var img in imgs)
+	{
+    HTML += "<img src='img/"+imgs[img]+"' onclick='choose_image(\""+imgs[img]+"\")' style='cursor:pointer'/>"
+	}
+
+dg('menu_overlay').innerHTML = HTML
+}
+
+
+
+function rnd(v,r)
+{
+return Math.round(v/r)*r
+}
+
+
+
+
+
+function screenToSVG(screenX, screenY) {
+    var p = SVG(map.graph.node).node.createSVGPoint()
+     p.x = screenX
+     p.y = screenY
+     return p.matrixTransform(SVG(map.graph.node).node.getScreenCTM());
+ }
+
+ 
+function SVGToScreen(screenX, screenY) {
+    var p = SVG(map.graph.node).node.createSVGPoint()
+     p.x = screenX
+     p.y = screenY
+     return p.matrixTransform(SVG(map.graph.node).node.getScreenCTM().inverse());
+ }
 	
 function value_to_txt(value,link)
 {
 var unit = '%'
+
 
 if(link)
 	{
@@ -152,7 +217,7 @@ if(request_type=="SNMP")
 		
 
 	
-	MENU_HTML += "<div>IP is on &nbsp;  &nbsp; <select id='link_ip_is' onchange='upd_LINK()'><option value='nodeA' "+isnodeA+">"+nodeAname+"</option><option value='nodeB'  "+isnodeB+">"+nodeBname+"</option></select></div>"
+	MENU_HTML += "<div>IP is on &nbsp;  &nbsp; <select id='link_ip_is' onchange='upd_LINK();link_callbackSNMP(link_selected)'><option value='nodeA' "+isnodeA+">"+nodeAname+"</option><option value='nodeB'  "+isnodeB+">"+nodeBname+"</option></select></div>"
 	
 	var o1=o2=o3=o4=o5=""
 	
@@ -166,7 +231,7 @@ if(request_type=="SNMP")
 		if(PROP.link_show_speed=="%")		o5=sel
 		}
 		
-	MENU_HTML += "<div>Show in <select id='link_show_speed' onchange='upd_LINK()'><option value='auto' "+o4+">Kbps/Mbps/Gbps</option><option value='kbps' "+o1+">Kbps</option><option value='mbps'  "+o2+">Mbps</option><option value='gbps' "+o3+">Gbps</option><option value='prc' "+o5+">%</option></select></div>"
+	MENU_HTML += "<div>Show in <select id='link_show_speed' onchange='upd_LINK();link_selected.redraw()'><option value='auto' "+o4+">Kbps/Mbps/Gbps</option><option value='kbps' "+o1+">Kbps</option><option value='mbps'  "+o2+">Mbps</option><option value='gbps' "+o3+">Gbps</option><option value='prc' "+o5+">%</option></select></div>"
 	
 
 	if(link_selected.error)
@@ -358,7 +423,8 @@ if(map._mode=="normal") return;
 
 var view_ok = 1
 
-if(document.getElementsByClassName('svg-pan-zoom_viewport')[0] && document.getElementsByClassName('svg-pan-zoom_viewport')[0].style.transform != "matrix(1, 0, 0, 1, 0, 0)") 	view_ok =0
+//if(document.getElementsByClassName('svg-pan-zoom_viewport')[0] && document.getElementsByClassName('svg-pan-zoom_viewport')[0].style.transform != "matrix(1, 0, 0, 1, 0, 0)") 	view_ok =0
+//if(map.graph.style() != "transform: matrix(1, 0, 0, 1, 0, 0);") 	view_ok =0
 
 
 if(Math.round(panZoomTiger.getZoom()*100)!=100)
@@ -377,16 +443,9 @@ function warning_bug_restore_view()
 {
 panZoomTiger.zoom(1)
 
-
-
-setTimeout(function(){   warning_bug_restore_view2()    }, 30);
-}
-
-function warning_bug_restore_view2()
-{
 warningbox.style.display="none"
+map.graph.style("transform: matrix(1, 0, 0, 1, 0, 0);")
 document.getElementsByClassName('svg-pan-zoom_viewport')[0].style.transform = "matrix(1, 0, 0, 1, 0, 0)"
-
 //var bbox = map.svg.node.getBBox()
 
 
@@ -394,9 +453,6 @@ document.getElementsByClassName('svg-pan-zoom_viewport')[0].style.transform = "m
 
 
 
-
-
-warning_bug_matrix()
 
 // simulate click on all elements
 for(var i=0;i<map.nodes.length;i++)
@@ -498,7 +554,7 @@ var node = { id: new_id, name: new_id, x: 290-diffX, y: 50-diffY, renderer: "rec
 padding: "12", graph: map, draggable:  undefined }
 */
 
-var node = { id: new_id, name: new_id, x: 290-diffX, y: 50-diffY, renderer: "rect",image:"test.png",  label: {position: "internal", visable: "true"},
+var node = { id: new_id, name: new_id, x: 290-diffX, y: 50-diffY, renderer: "rect",  label: {position: "internal", visable: "true"},
 padding: "12", graph: map, draggable:  undefined }
 
 

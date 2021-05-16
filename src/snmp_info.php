@@ -20,12 +20,27 @@ if($todo=="get_interface")
 	get_interface();
 	}
 
+if($todo=="get_image_menu")
+	{
+	get_image_menu();
+	}
 
 
 
 
 
+function get_image_menu()
+{
+$dir    = 'img';
 
+
+$scanned_directory = array_diff(scandir("img"), array('..', '.'));
+
+
+
+
+echo json_encode($scanned_directory);
+}
 
 function get_interface()
 {

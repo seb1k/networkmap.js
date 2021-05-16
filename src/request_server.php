@@ -174,6 +174,9 @@ return (object)["v"=>$v,"error"=>""];
 function get_snmp($link)
 {
 
+    // FAKE DATA
+//return (object)["v"=>"1515;3333","error"=>""];
+
 if (!function_exists('snmp2_get'))
     return (object)["v"=>"","error"=>"PHP SNMP is not activated on the server"];
 $link = substr($link,7); // remove "snmp://"
@@ -186,10 +189,8 @@ list($community, $ip) = explode('@', $serv_info_split[0]);
 
 list($oid) = explode('|', $serv_info_split[1]);
 
+
 return get_speed_port($ip, $community,$oid);
-
-
-
 }
 
 
