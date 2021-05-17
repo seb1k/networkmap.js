@@ -202,12 +202,16 @@ function get_speed_port($ip,$community,$oid)
 {
 
 
+//$ifInOctets = snmp2_get($ip, $community, "1.3.6.1.2.1.2.2.1.10.$oid"); // 32bits
+//$ifOutOctets =  snmp2_get($ip, $community, "1.3.6.1.2.1.2.2.1.16.$oid"); // 32bits
+$ifInOctets     =   snmp2_get($ip, $community, "1.3.6.1.2.1.31.1.1.1.6.$oid");
+$ifOutOctets    =   snmp2_get($ip, $community, "1.3.6.1.2.1.31.1.1.1.10.$oid");
+
+ 
+
+ 
 
 
-
-
-$ifInOctets = 	snmp2_get($ip, $community, "1.3.6.1.2.1.2.2.1.10.$oid");
-$ifOutOctets = 	snmp2_get($ip, $community, "1.3.6.1.2.1.2.2.1.16.$oid");
 $ifInOctets =	(int)explode(' ',$ifInOctets)[1];
 $ifOutOctets =	(int)explode(' ',$ifOutOctets)[1];
 $ts = time();
