@@ -25,6 +25,30 @@ var link_selected = false;
 
 setInterval(function(){ warning_bug_matrix(); }, 700);
 
+function node_image_loaded(img,retry)
+{
+retry++
+
+var p = img.parentNode
+var imgbox = p.querySelector('image').getBBox()
+var tspan = p.querySelector('tspan')
+var tspanbox = tspan.getBBox()
+
+if(imgbox.width==0)
+    {
+    if(retry>100)
+        {
+        error('SVG img not loaded')
+        return
+        }
+    setTimeout(function(){node_image_loaded(img,retry), 50});
+    return
+    }
+
+tspan.setAttribute("x", imgbox.width/2-tspanbox.width/2);
+tspan.setAttribute("dy", -10);
+}
+
 
 function click_div_grey()
 {

@@ -10037,9 +10037,12 @@ networkMap.Node.registerRenderer('rect', function(node, svg) {
 			.stroke({ color: node.options.strokeColor, width: node.options.strokeWidth })
 			.attr({ filter:"url(#dropshadowNODE)" // NODE
 			})
-		
-		if(node.options.bgImage.endsWith(".svg")) // SVG : resize 0.8
-			rect.attr({transform:"scale(0.8)"})
+
+		rect.node.addEventListener('load', function() { node_image_loaded(this,0); });
+		//if(node.options.bgImage.endsWith(".svg")) // SVG : resize 0.8
+		//	rect.attr({transform:"scale(0.8)"})
+
+		//setTimeout(function() {			image_after_load(svg)			})
 		}
 	else
 		{
@@ -10054,11 +10057,13 @@ networkMap.Node.registerRenderer('rect', function(node, svg) {
 				bboxLabel.width + node.options.padding * 2, 
 				bboxLabel.height + node.options.padding * 2
 			);
-		}		
+
+		// this cover is here there to prevent user from selecting 
+		// text in the label
+		var cover = rect.clone().fill({opacity: 0}).front();
+		}	
 	label.front();
 
-	// this cover is here there to prevent user from selecting 
-	// text in the label
 	var cover = rect.clone().fill({opacity: 0}).front();
 
 	// move it in place
