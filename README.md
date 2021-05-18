@@ -1,7 +1,6 @@
 
 
-I needed a network map tool for my job...
-networkmap.js had a good design, so I used it.
+I needed a network map tool for my job... [networkmap.js](https://github.com/otm/networkmap.js) had a good design, so I used it.
 
 But it's buggy as HELL !
 
@@ -29,15 +28,6 @@ You can now :
 
 It's an unfinished version, but it work WAY better than the original project.
 
-
-
-
-
-
-Original project is here :
-
-https://github.com/otm/networkmap.js
-
-
+<br/><br/><br/>
 
 SVG set from : https://github.com/jb-stack/Dia-vrt-sheets
