@@ -26,8 +26,5 @@ You can now :
 
 <br/><br/><br/>
 
-It's an unfinished version, but it work WAY better than the original project.
-
-<br/><br/><br/>
 
 SVG set from : https://github.com/jb-stack/Dia-vrt-sheets
