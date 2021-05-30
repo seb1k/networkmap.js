@@ -9,7 +9,7 @@ I corrected bugs and added a lot of functionality...
 <br/>
 <br/><br/>
 
-![screenshot](img/networkmap2.png.png)
+![screenshot](img/networkmap.png)
 
 
 You can now :
@@ -21,7 +21,7 @@ You can now :
 - Request with SNMP, use .rrd file.
 - Use a password to prevent unwanted changes
 - Zoom and move the map (buggy when editing)
-- Use images
+- Upload and use images
 - More soon...
 
 <br/><br/><br/>
