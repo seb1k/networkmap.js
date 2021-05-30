@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" type="text/css" href="css/networkmap.css">
+
+		<script type="text/javascript" src="js/networkmap.js"></script>
+
+
+
+		<script type="text/javascript" src="js/function_2021.js"></script>
+		<script type="text/javascript" src="js/svg-pan-zoom.js"></script>
+		<script type="text/javascript" >
+
+			var map;
+
+			document.addEventListener('DOMContentLoaded', function(){
+				var paper = document.getElementById('paper');
+
+				// Set size of target div
+				paper.style.height = document.documentElement.clientHeight-4 + 'px';
+
+
+				// Initialize map
+				var load_map = get_map_name()
+				map = new networkMap.Graph('paper').load('map/'+load_map+'.json?nocache='+Math.floor(Math.random()*999999999999999));
+
+
+				
+				// Resize div and update networkmap
+				var resizeTimer;
+				window.onresize = function(){
+					clearTimeout(resizeTimer);
+
+					resizeTimer = setTimeout(function(){
+						// resize target div
+						paper.style.height = document.documentElement.clientHeight-4+ 'px';
+
+						// trigger update event
+					//	map.triggerEvent('resize', map);
+					}, 16);
+				};
+
+				window.setTimeout(function() {
+                    panZoomTiger = svgPanZoom(document.getElementById("SvgjsSvg1000"), { minZoom: 0.2 });
+                }, 500);
+
+			svg_add_shadow()
+
+
+
+			});
+
+		</script>
+	</head>
+	<body>
+		<div id="paper" style="left: 0px; right: 0px; top: 0px; box-sizing: border-box;"></div>
+		<div id="warningbox" style="display:none;right: 70px; bottom: 8px; position:absolute;background-color:#fddcdc;height:24px;padding:8px;border-radius:4px">Graphic settings are buggy when zooming &nbsp; <button class="btn btn-info" onclick="warning_bug_restore_view()">Restore zoom</button></div>
+		<div id="div_grey" style="left: 0px; top: 0px; width:100%;height:100%;position:absolute;opacity:.3;display:none;z-index:9999;background-color: #000;" onclick="click_div_grey()"></div>
+		<div id="menu_overlay" style="left: 50%; top: 50px; width:420px;position:absolute;display:none;z-index:10000;background-color: #fafafa;margin-left: -210px;max-height: 90%;overflow: auto;"></div>
+	</body>
+</html>
