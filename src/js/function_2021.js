@@ -26,6 +26,11 @@ var link_selected = false;
 setInterval(function(){ warning_bug_matrix(); }, 700);
 
 
+function clean_edit()
+{
+map.settings.purgeEditing()
+}
+
 function check_need_password(req,func_click_ok)
 {
 if(req =='{"status":"need_password","error":"need_password"}')
@@ -122,28 +127,48 @@ return map_name
 
 function save_map()
 {
+//map.settings.purgeEditing() // prevent bug with selection (if _setupSVG)
+
 var map_name = encodeURIComponent(get_map_name())
 var map_data = encodeURIComponent(JSON.stringify(map.getConfiguration()))
 var ret = get_POST_data("ajax_functions.php","todo=save_map&map_name="+map_name+"&map_data="+map_data)
 
 if(check_need_password(ret,"save_map()")) return;
 
-if(ret=="ok")
+if(ret!="ok")
     {
-    var b = document.getElementById('SaveButton')
-    b.innerHTML = "Ok"
-    b.className="btn btn-success pull-right"
-
-    setTimeout(function() {
-        b.innerHTML = "Save"
-        b.className="btn btn-primary pull-right"
-        }, 1000)
-    }
-else {
     var ret = JSON.parse(ret)
     new networkMap.widget.Modal()
         .alert('There was an error while saving the weathermap (' + ret.error + ')', {title: 'Error'});
-}
+    return
+    }
+
+var b = document.getElementById('SaveButton')
+b.innerHTML = "Ok"
+b.className="btn btn-success pull-right"
+b.disabled=true
+
+setTimeout(function() {
+    b.innerHTML = "Save"
+    b.className="btn btn-primary pull-right"
+    b.disabled=false
+    }, 1000)
+
+    /*
+//flush array request
+request_server = [];
+request_AJAX = [];
+map.$updateQ = {};
+
+// flush all link request
+for(var i=0;i<map.links.length;i++)
+    {
+    //map.links[i]._setupSVG(map.links[i].options) // more bugs !
+    //map.links[i].subLinks.nodeA.primaryLink.setupEvents() // more bugs !
+    }
+// go request
+//map.batchUpdate()
+*/
 }
 
 
@@ -773,7 +798,7 @@ else
 
 function function_link_click(t)
 {
-var SVGParent = t.parentElement
+var SVGParent = t.closest('g')
 var nodeIDclick = SVG2node(SVGParent)
 
 
@@ -946,15 +971,18 @@ if(url)
 
 
 var timeout_grab_data = false;
+
 function start_timeout_grab_data()
 {
 clearTimeout(timeout_grab_data);
 timeout_grab_data = setTimeout(function(){    go_interval()    }, 300);
 }
 
+var interval_go_grab_data = false;
 function go_interval()
 {
-setInterval(function(){go_grab_data(); }, map.properties.properties.refreshInterval*1000);
+clearInterval(interval_go_grab_data);
+interval_go_grab_data = setInterval(function(){go_grab_data(); }, map.properties.properties.refreshInterval*1000);
 go_grab_data();
 }
 

@@ -7559,6 +7559,8 @@ networkMap.extend(networkMap.SettingsManager, {
 		deleteButton.id = 'deleteButton';
 		deleteButton.classList.add('btn', 'btn-danger');
 		deleteButton.addEventListener('click', this.delete.bind(this));
+		deleteButton.addEventListener('click', clean_edit);
+
 
 		menu.appendChild(menuButtons);
 		menuButtons.appendChild(saveButton);
@@ -7848,6 +7850,7 @@ networkMap.extend(networkMap.SettingsManager, {
 	delete: function(e){
 		log('act delete')
 		log(this.editing[this.editing.length - 1].configurationEvent())
+
 		return this._runAction('delete', this.editing[this.editing.length - 1].configurationEvent());
 	},
 	
@@ -10517,6 +10520,7 @@ networkMap.extend(networkMap.LinkPath, {
 });
 
 networkMap.PrimaryLink = function(link, svg, options){
+
 	networkMap.LinkPath.call(this, link, svg, options);	
 };
 
