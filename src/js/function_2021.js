@@ -28,7 +28,8 @@ setInterval(function(){ warning_bug_matrix(); }, 700);
 
 function clean_edit()
 {
-map.settings.purgeEditing()
+triggerEvent(map.svg.node,'click')
+//map.settings.purgeEditing()
 }
 
 function check_need_password(req,func_click_ok)

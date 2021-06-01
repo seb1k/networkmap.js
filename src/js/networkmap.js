@@ -7850,7 +7850,6 @@ networkMap.extend(networkMap.SettingsManager, {
 	delete: function(e){
 		log('act delete')
 		log(this.editing[this.editing.length - 1].configurationEvent())
-
 		return this._runAction('delete', this.editing[this.editing.length - 1].configurationEvent());
 	},
 	
@@ -8982,6 +8981,8 @@ networkMap.extend(networkMap.Graph, {
 	 */
 	removeNode: function(node){
 
+		if(node.tspan)
+			node.tspan.remove()
 
 		this.getLinks(node).forEach(function(link){
 			this.removeLink(link);
