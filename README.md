@@ -18,7 +18,7 @@ You can now :
 - Save your networkmap
 - Use multiple networkmap
 - Do requests from your browser ( and the server when CORS is blocking the request )
-- Request with SNMP, use .rrd file.
+- Request with HTTP, SNMP, use .rrd file.
 - Use a password to prevent unwanted changes
 - Zoom and move the map (buggy when editing)
 - Upload and use images
