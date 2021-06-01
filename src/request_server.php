@@ -106,6 +106,8 @@ $result = @file_get_contents($link, false, $context);
 
 if ($result === FALSE)
 	{
+    if(!isset($http_response_header)) // dns error ?
+        return (object)["v"=>"","error"=>"HTTP request error"];
 	$code=getHttpCode($http_response_header);
 	return (object)["v"=>"","error"=>"HTTP error $code"];
 	}
@@ -117,13 +119,13 @@ return (object)["v"=>$result,"error"=>""];
 
 function getHttpCode($http_response_header)
 {
-    if(is_array($http_response_header))
-    {
-        $parts=explode(' ',$http_response_header[0]);
-        if(count($parts)>1) //HTTP/1.0 <code> <text>
-            return intval($parts[1]); //Get code
-    }
-    return 0;
+if(is_array($http_response_header))
+{
+    $parts=explode(' ',$http_response_header[0]);
+    if(count($parts)>1) //HTTP/1.0 <code> <text>
+        return intval($parts[1]); //Get code
+}
+return 0;
 }
 
 
