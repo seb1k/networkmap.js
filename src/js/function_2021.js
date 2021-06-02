@@ -532,13 +532,28 @@ var defs = document.getElementById('SvgjsSvg1000').querySelector('defs');
 var filter = createOn(defs,'filter',{    id:"dropshadowNODE",    height:"180%"});
 var feGaussianBlur = createOn(filter,'feGaussianBlur',{    in:"SourceAlpha",    stdDeviation:"3"});
 var feOffset = createOn(filter,'feOffset',{    dx:2,    dy:2,    result:"offsetblur"});
+
 var feComponentTransfer = createOn(filter,'feComponentTransfer');
 var feFuncA = createOn(feComponentTransfer,'feFuncA',{    type:"linear",    slope:"0.2"});
 
 var feMerge = createOn(filter,'feMerge');
 var feMergeNode = createOn(feMerge,'feMergeNode');
 var feMergeNode = createOn(feMerge,'feMergeNode',{    in:"SourceGraphic"});
+
+
+// RED SHADOW
+var defs = document.getElementById('SvgjsSvg1000').querySelector('defs');
+var filter = createOn(defs,'filter',{    id:"dropshadowNODEred",    height:"110%",    width:"110%",x:"-5%",y:"-5%"});
+
+var feFlood = createOn(filter,'feFlood',{     result:"offsetColor"});
+feFlood.setAttributeNS(null,"flood-color","#f00");
+feFlood.setAttributeNS(null,"flood-opacity",0.5);
+
+var feMerge = createOn(filter,'feMerge');
+var feMergeNode = createOn(feMerge,'feMergeNode');
+var feMergeNode = createOn(feMerge,'feMergeNode',{    in:"SourceGraphic"});
 }
+
 
 
 function createOn( dad, name, attrs, text ){
@@ -788,6 +803,7 @@ else
     if(linkA) // try to link to new element
         {
         linkAsvg.setAttribute("fill", "#ddd")
+        linkAsvg.setAttribute("filter","url(#dropshadowNODE)")
         }
     linkA = false
     }
@@ -816,6 +832,7 @@ if(linkA == nodeIDclick) // return to normal
     {
     var elemcolor = SVGParent.firstChild
     elemcolor.setAttribute("fill", "#ddd")
+    elemcolor.setAttribute("filter","url(#dropshadowNODE)")
     linkA = false
     return;
     }
@@ -830,6 +847,7 @@ if(linkA) // try to link to new element
     // return to normal
 
     linkAsvg.setAttribute("fill", "#ddd")
+    linkAsvg.setAttribute("filter","url(#dropshadowNODE)")
     linkA = false
     return;
     }
@@ -840,6 +858,7 @@ linkA = nodeIDclick
 var elemcolor = SVGParent.firstChild
 linkAsvg=elemcolor
 elemcolor.setAttribute("fill", "#bd362f")
+elemcolor.setAttribute("filter","url(#dropshadowNODEred)")
 }
 
 
