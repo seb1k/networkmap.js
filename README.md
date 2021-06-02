@@ -5,7 +5,7 @@ I needed a network map tool for my job... [networkmap.js](https://github.com/otm
 But it's buggy as HELL !
 
 <br/>
-I corrected bugs and added a lot of functionality...
+I corrected bugs and added a lot of features...
 <br/>
 <br/><br/>
 
