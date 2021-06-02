@@ -5534,7 +5534,7 @@ if (objCtr.defineProperty) {
 networkMap.path = function(svg){
 	return svg.path().attr({ 
 		fill: '#eee',
-		//stroke: '#ccc', Remove stroke
+		//stroke: '#000', //Remove stroke
 		filter:"url(#dropshadowNODE)"
 	});
 };
@@ -8988,19 +8988,14 @@ networkMap.extend(networkMap.Graph, {
 			this.removeLink(link);
 		}.bind(this));		
 
-		//map.graph.removeNode(node); 
-		//this.nodes.erase(node);
-		log(map.nodes.length)
 		var id_delete = node2ID(node)
-		log(id_delete)
+
 		if(id_delete === false)
 			alert("error cant find id")
 		delete(map.nodes[id_delete])
 		map.nodes.splice(id_delete, 1);
-		log(map.nodes.length)
+
 		node.setGraph(null);
-
-
 		
 		return this;
 	},
@@ -10418,7 +10413,16 @@ networkMap.extend(networkMap.LinkPath, {
 	},
 	
 	setupEvents: function(){
-		this.svg.on('click', this._clickHandler.bind(this));
+
+	//this.svg.on('click', this._clickHandler.bind(this));
+
+	// add onclick event on the link (include label) (only once per link)
+	if(!this.getSubLink().svg.node.dataset.eventadded)
+		{
+		this.getSubLink().svg.on('click', this._clickHandler.bind(this));
+		this.getSubLink().svg.node.dataset.eventadded=1
+		}
+
 		
 		if (this.properties.get('events')){
 			if (this.properties.get('events.click')){

@@ -543,7 +543,7 @@ var feMergeNode = createOn(feMerge,'feMergeNode',{    in:"SourceGraphic"});
 
 // RED SHADOW
 var defs = document.getElementById('SvgjsSvg1000').querySelector('defs');
-var filter = createOn(defs,'filter',{    id:"dropshadowNODEred",    height:"110%",    width:"110%",x:"-5%",y:"-5%"});
+var filter = createOn(defs,'filter',{    id:"dropshadowNODEred",    height:"104%",    width:"104%",x:"-2%",y:"-2%"});
 
 var feFlood = createOn(filter,'feFlood',{     result:"offsetColor"});
 feFlood.setAttributeNS(null,"flood-color","#f00");
@@ -778,6 +778,7 @@ var linkA = false;
 var linkAsvg = false;
 function lnk_but(e)
 {
+clean_edit()
 
 var AddButton = document.getElementById('AddButton')
 var SaveButton = document.getElementById('SaveButton')
