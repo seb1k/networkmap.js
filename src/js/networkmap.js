@@ -1,3 +1,14 @@
+
+
+var new_map_JSON='{"defaults":{"graph":{"utilizationLabels":{"enabled":true,"fontSize":12,"padding":3},"grid":{"xy":10},"gridEnabled":true,"refreshInterval":30,"backgroundColor":"#fafafa"},"node":{},"link":{}},"nodes":[{"id":"node4","name":"node4","x":770,"y":310,"renderer":"rect","image":"test.png","label":{"position":"internal","visable":"true"},"padding":"12"},{"id":"node7","name":"Internet","x":580,"y":140,"renderer":"rect","label":{"position":"internal","visable":"true"},"padding":"12","bgImage":"cloud120.png"},{"id":"node1","name":"node1","x":960,"y":180,"renderer":"rect","label":{"position":"internal","visable":"true"},"padding":"12"},{"id":"node2","name":"node2","x":890,"y":440,"renderer":"rect","label":{"position":"internal","visable":"true"},"padding":"12"}],"links":[{"nodeA":{"id":"node7","name":"Gi0\/1","requestUrl":"http:\/\/random_data","edge":{"point":{"x":644,"y":199},"pointer":{"x":4,"y":21},"direction":{"x":0,"y":1}},"error":""},"nodeB":{"id":"node4","name":"Gi0\/1","requestUrl":"http:\/\/random_data","error":""}},{"nodeA":{"id":"node4","name":"Gi0\/1","requestUrl":"http:\/\/random_data","error":""},"nodeB":{"id":"node1","name":"Gi0\/1","requestUrl":"http:\/\/random_data","error":""}},{"nodeA":{"id":"node2","name":"Gi0\/1","requestUrl":"http:\/\/random_data","error":"","edge":{"point":{"x":914.5,"y":460},"pointer":{"x":-9.75,"y":-0.5},"direction":{"x":-0.9989968228313574,"y":0.04478111178670846}}},"nodeB":{"id":"node4","name":"Gi0\/1","requestUrl":"http:\/\/random_data","error":""}}]}'
+
+
+
+
+
+
+
+
 /*!
 * svg.js - A lightweight library for manipulating and animating SVG.
 * @version 2.2.5
@@ -8728,7 +8739,12 @@ networkMap.extend(networkMap.Graph, {
 		request.open('GET', url, true);
 
 		request.onload = function() {
-			if (request.status >= 200 && request.status < 400){
+
+			if (request.status >= 200 && request.status == 404){
+				new networkMap.widget.Modal().alert('The weathermap "'+get_map_name()+' doesn\'t exist", a new one will be created', {title: 'Info'});
+				this.loadObject(JSON.parse(new_map_JSON));
+			}
+			else if (request.status >= 200 && request.status < 400){
 				// Success!
 				this.loadObject(JSON.parse(request.responseText));
 			} else {
