@@ -64,7 +64,7 @@ $POSTdata = json_decode($map_data);
 
 $FILE = realpath(dirname(__FILE__)) . '/map/' . filter_filename( $map_name).".json";
 
-$result = @file_put_contents($FILE, json_encode($POSTdata, JSON_PRETTY_PRINT));
+$result = @file_put_contents($FILE, json_encode($POSTdata));
 
 if ($result === false)
 	{
