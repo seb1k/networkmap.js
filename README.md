@@ -24,7 +24,7 @@ You can now :
 - Upload and use images
 - More soon...
 
-<br/><br/><br/>
+<br/>
 
 
 ## Install :
@@ -49,5 +49,5 @@ ex : https://your.domain/networkmapjs/index.html?map=my_new_map
 
 If it doesn't exist a new one will be created.
 
-
+<br/><br/><br/>
 SVG set from : https://github.com/jb-stack/Dia-vrt-sheets
