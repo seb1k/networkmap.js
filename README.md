@@ -27,4 +27,27 @@ You can now :
 <br/><br/><br/>
 
 
+## Install :
+
+ - You need a webserver with PHP
+ - PHP-SNMP if you want to use the SNMP
+
+Move all the files from the src folder to you webserver.
+
+These folders must be writable :
+ - /img (to upload images)
+ - /map (to save maps)
+ - /oid_info (used to calculate bandwidth with SNMP)
+
+
+
+## Use multiple weathermaps :
+
+At the end of the link, add the "map" argument followed by the map name :
+
+ex : https://your.domain/networkmapjs/index.html?map=my_new_map
+
+If it doesn't exist a new one will be created.
+
+
 SVG set from : https://github.com/jb-stack/Dia-vrt-sheets
