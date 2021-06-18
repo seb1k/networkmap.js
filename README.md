@@ -41,7 +41,7 @@ These folders must be writable :
 
 
 
-## Use multiple weathermaps :
+## Use multiple maps :
 
 At the end of the link, add the "map" argument followed by the map name :
 
