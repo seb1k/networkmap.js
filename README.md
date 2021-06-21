@@ -39,7 +39,16 @@ These folders must be writable :
  - /map (to save maps)
  - /oid_info (used to calculate bandwidth with SNMP)
 
+## Use a password
 
+Add your password in the config.php file :
+
+```php
+<?php
+
+$password = "YOUR_PASSWORD_HERE";
+
+``
 
 ## Use multiple maps :
 
