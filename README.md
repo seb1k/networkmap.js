@@ -48,7 +48,7 @@ Add your password in the config.php file :
 
 $password = "YOUR_PASSWORD_HERE";
 
-``
+```
 
 ## Use multiple maps :
 
