@@ -11,6 +11,7 @@ I corrected bugs and added a lot of features...
 
 ![screenshot](img/networkmap.png)
 
+![screenshot](img/fiber2.png)
 
 You can now :
 
