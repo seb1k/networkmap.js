@@ -204,6 +204,9 @@ return get_speed_port($ip, $community,$oid);
 function get_speed_port($ip,$community,$oid)
 {
 
+if(!$oid || $oid=="Error")
+	return (object)["v"=>"","error"=>"No interface"];
+
 
 //$ifInOctets = snmp2_get($ip, $community, "1.3.6.1.2.1.2.2.1.10.$oid"); // 32bits
 //$ifOutOctets =  snmp2_get($ip, $community, "1.3.6.1.2.1.2.2.1.16.$oid"); // 32bits
@@ -244,6 +247,11 @@ $old_value = json_decode($old_valueJSON );
 
 
 $speed = get_speed_kbps($old_value,$new_value);
+
+if ($speed === false)
+	{
+	return (object)["v"=>"","error"=>"Check too early... Wait a few seconds"];
+	}
 return (object)["v"=>$speed,"error"=>""];
 }
 
@@ -251,12 +259,16 @@ return (object)["v"=>$speed,"error"=>""];
 function get_speed_kbps($old_value,$new_value)
 {
 
+if(!isset($new_value->ifOutOctets))return false;
+if(!isset($old_value->ifOutOctets))return false;
+
 $byte_transfererOUT = $new_value->ifOutOctets - $old_value->ifOutOctets;
 $byte_transfererIN = $new_value->ifInOctets - $old_value->ifInOctets;
 
 $time_elapsed = $new_value->ts - $old_value->ts;
 
-return round(8*($byte_transfererIN /(1024))/$time_elapsed,1).";".round(8*($byte_transfererOUT /(1024))/ $time_elapsed,1);
+if($time_elapsed==0)
+	return false;
 
-//return round(($byte_transfererIN /(1024*1024))/$time_elapsed,1).";".round(($byte_transfererOUT /(1024*1024))/ $time_elapsed,1);
+return round(8*($byte_transfererIN /(1024))/$time_elapsed,1).";".round(8*($byte_transfererOUT /(1024))/ $time_elapsed,1);
 }
