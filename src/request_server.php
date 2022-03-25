@@ -4,7 +4,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
+set_error_handler( 'error_handler' );
 
 include('functions.php');
 include('config.php');
@@ -204,16 +204,21 @@ return get_speed_port($ip, $community,$oid);
 function get_speed_port($ip,$community,$oid)
 {
 
-if(!$oid || $oid=="Error")
-	return (object)["v"=>"","error"=>"No interface"];
+if(!$oid || !is_numeric($oid))
+	return (object)["v"=>"","error"=>"No interface $oid"];
 
 
 //$ifInOctets = snmp2_get($ip, $community, "1.3.6.1.2.1.2.2.1.10.$oid"); // 32bits
 //$ifOutOctets =  snmp2_get($ip, $community, "1.3.6.1.2.1.2.2.1.16.$oid"); // 32bits
+
+
+ try {
 $ifInOctets     =   snmp2_get($ip, $community, "1.3.6.1.2.1.31.1.1.1.6.$oid");
 $ifOutOctets    =   snmp2_get($ip, $community, "1.3.6.1.2.1.31.1.1.1.10.$oid");
-
- 
+} catch (Exception $e) {
+	return (object)["v"=>"","error"=>$e->getMessage()];
+    //echo 'Exception reçue : ',  $e->getMessage(), "\n";
+}
 
  
 
@@ -271,4 +276,17 @@ if($time_elapsed==0)
 	return false;
 
 return round(8*($byte_transfererIN /(1024))/$time_elapsed,1).";".round(8*($byte_transfererOUT /(1024))/ $time_elapsed,1);
+}
+
+
+
+function error_handler( $errno, $errmsg, $filename, $linenum, $vars )
+  {
+    // error was suppressed with the @-operator
+    if ( 0 === error_reporting() )
+      return false;
+
+    if ( $errno !== E_ERROR )
+      throw new \ErrorException( sprintf('%s: %s', $errno, $errmsg ), 0, $errno, $filename, $linenum );
+
 }
