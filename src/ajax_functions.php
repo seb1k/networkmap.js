@@ -52,6 +52,7 @@ if($todo=="new_map_name")
 	}
 if($todo=="delete_map")
 	{
+	check_need_password();
 	delete_map();
 	}
 
