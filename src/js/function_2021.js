@@ -829,7 +829,7 @@ if(!nodeIDclick)
 
 var click_ok = 0;
 
-if(linkA == nodeIDclick) // return to normal
+if(linkA.id == nodeIDclick.id) // return to normal
     {
     var elemcolor = SVGParent.firstChild
     elemcolor.setAttribute("fill", "#ddd")
