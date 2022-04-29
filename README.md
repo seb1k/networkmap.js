@@ -15,8 +15,8 @@ I corrected bugs and added a lot of features...
 
 You can now :
 
-- Add nodes / links
-- Use multiple networkmap
+- Create networkmaps
+- Use multiple networkmaps
 - Do requests from your browser ( and the server when CORS is blocking the request )
 - Request with HTTP, SNMP, use .rrd file.
 - Use a password to prevent unwanted changes
