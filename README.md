@@ -15,15 +15,13 @@ I corrected bugs and added a lot of features...
 
 You can now :
 
-- Add nodes / links in the interface.
-- Save your networkmap
+- Add nodes / links
 - Use multiple networkmap
 - Do requests from your browser ( and the server when CORS is blocking the request )
 - Request with HTTP, SNMP, use .rrd file.
 - Use a password to prevent unwanted changes
 - Zoom and move the map (buggy when editing)
 - Upload and use images
-- More soon...
 
 <br/>
 
