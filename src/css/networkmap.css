@@ -119,9 +119,8 @@ button.close{padding:0;cursor:pointer;background:transparent;border:0;-webkit-ap
 .nm-trigger{position:relative;width:100%;cursor:pointer;z-index:20;border:solid 1px #a6a6a6;padding-left:1em;padding-right:1em;background:#fff}
 .nm-trigger:hover{background:#e6e6e6}
 .nm-icon-menu{background-repeat:no-repeat;width:26px;height:26px;position:absolute;top:14px;left:1em;transition:all .2s ease 200ms;background-image: url("data:image/webp;base64,UklGRkYCAABXRUJQVlA4WAoAAAAYAAAAGQAAGQAAVlA4THEBAAAvGUAGEHVAbNtIkjT5R8FUb9u93SHU3uOLgCMAYCEpk92t7LNto7stT6Vt2+xsfcS2Vdr2re2Egdu2jaTu276+Yt7I2hNc5zhzpSK4haSe4CCCADHYtl/UGuYDQPaEPPZq2Z8F5TzV+V98a+D3Z5vaXhaOFpnh0hHRQIuhJaaHy2Kby4KQGr6QVHTM7dxglc0C1Eh/5k8NIg7wIgqo7BsxZIsyIBYYFUM1zcKDbKQHDCjZ9YJWO94XOFKt+YPglko2ygNmBlkSRVuIxIEqDs6n4ecvQ0VYb+q7myZmUx981NSO7h1vPU6sJJBztirsEb0/RXKc4t+qJOwHDK7avJFM8DWW4iZupAk9Xpyr/0zYrhFDtjNhEqH5RUrpepRRV3wtvvle6ITrQqS/G+jFLthbYG7piai3HUP0gcpii8e2y6hsa+Cl1E/8Xc3cFZj2bZnDFjcnMezBB6Caj6DxZnCF/c9BiSxt1c6VGM7g+mD/hgEARVhJRq4AAABJSSoACAAAAAYAEgEDAAEAAAABAAAAGgEFAAEAAABWAAAAGwEFAAEAAABeAAAAKAEDAAEAAAACAAAAMQECABEAAABmAAAAaYcEAAEAAAB4AAAAAAAAAGAAAAABAAAAYAAAAAEAAABwYWludC5uZXQgNC4yLjE2AAAEAACQBwAEAAAAMDIzMAGgAwABAAAAAQAAAAKgBAABAAAAGgAAAAOgBAABAAAAGgAAAAAAAAA=")}
-.nm-menu-open .nm-icon-menu{position:absolute;left:95%;-webkit-transform:translateX(-100%);transform:translateX(-100%);transition:all .2s ease 0ms}
 .nm-label{position:relative;font-size:19px;text-decoration:none;letter-spacing:1px;line-height:2.75;text-transform:uppercase;transition:all .2s ease 0s;right:0;color:#a6a6a6;padding-left:2.5em;transition:all .2s ease 200ms}
-.nm-menu-open .nm-label{padding-left:0;padding-right:3em;transition:all .2s ease 0s}
+
 .nm-menu ul{list-style:none outside none;pointer-events:none;position:relative;z-index:0;transition:max-height .2s linear 0s;max-height:0;overflow:hidden;margin:-2px 0 0 0;border-style:none;padding:0}
 .nm-menu>ul{border:solid 1px #a6a6a6}
 .nm-menu.nm-menu-open ul{pointer-events:auto;z-index:200;transition:max-height .2s linear 0s;background:#fff;max-height:600px;display:block}

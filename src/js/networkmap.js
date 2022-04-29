@@ -2,7 +2,7 @@
 
 var new_map_JSON='{"defaults":{"graph":{"utilizationLabels":{"enabled":true,"fontSize":12,"padding":3},"grid":{"xy":10},"gridEnabled":true,"refreshInterval":30,"backgroundColor":"#fafafa"},"node":{},"link":{}},"nodes":[{"id":"node4","name":"node4","x":770,"y":310,"renderer":"rect","image":"test.png","label":{"position":"internal","visable":"true"},"padding":"12"},{"id":"node7","name":"Internet","x":580,"y":140,"renderer":"rect","label":{"position":"internal","visable":"true"},"padding":"12","bgImage":"cloud120.png"},{"id":"node1","name":"node1","x":960,"y":180,"renderer":"rect","label":{"position":"internal","visable":"true"},"padding":"12"},{"id":"node2","name":"node2","x":890,"y":440,"renderer":"rect","label":{"position":"internal","visable":"true"},"padding":"12"}],"links":[{"nodeA":{"id":"node7","name":"Gi0\/1","requestUrl":"http:\/\/random_data","edge":{"point":{"x":644,"y":199},"pointer":{"x":4,"y":21},"direction":{"x":0,"y":1}},"error":""},"nodeB":{"id":"node4","name":"Gi0\/1","requestUrl":"http:\/\/random_data","error":""}},{"nodeA":{"id":"node4","name":"Gi0\/1","requestUrl":"http:\/\/random_data","error":""},"nodeB":{"id":"node1","name":"Gi0\/1","requestUrl":"http:\/\/random_data","error":""}},{"nodeA":{"id":"node2","name":"Gi0\/1","requestUrl":"http:\/\/random_data","error":"","edge":{"point":{"x":914.5,"y":460},"pointer":{"x":-9.75,"y":-0.5},"direction":{"x":-0.9989968228313574,"y":0.04478111178670846}}},"nodeB":{"id":"node4","name":"Gi0\/1","requestUrl":"http:\/\/random_data","error":""}}]}'
 
-
+var change_map_name = 0;
 
 
 
@@ -7530,11 +7530,16 @@ networkMap.extend(networkMap.SettingsManager, {
 		var nav = document.createElement('nav');
 		nav.classList.add('nm-menu');
 
-		var trigger = document.createElement('div');
-		trigger.id='but_nm_trigger';
-		trigger.classList.add('nm-trigger');
-		trigger.innerHTML = '<span class="nm-icon nm-icon-menu"></span><a class="nm-label">Settings</a>';
-		trigger.addEventListener('click', this.toggle.bind(this));
+		var triggerDIV = document.createElement('div');
+		triggerDIV.id='but_nm_trigger';
+		triggerDIV.classList.add('nm-trigger');
+		
+		var menu_inner = get_menu_inner()
+		
+		triggerDIV.innerHTML = '<span class="nm-icon nm-icon-menu"></span><a class="nm-label">'+menu_inner+'</a>';
+		
+		
+		triggerDIV.addEventListener('click', this.toggle.bind(this));
 
 		var menu = this.menu = document.createElement('ul');
 
@@ -7579,7 +7584,7 @@ networkMap.extend(networkMap.SettingsManager, {
 		menuButtons.appendChild(LnkButton);
 
 		menuButtons.appendChild(deleteButton);
-		nav.appendChild(trigger);
+		nav.appendChild(triggerDIV);
 		nav.appendChild(menu);
 		menu.appendChild(editContent);
 		return nav;
@@ -8741,7 +8746,18 @@ networkMap.extend(networkMap.Graph, {
 		request.onload = function() {
 
 			if (request.status >= 200 && request.status == 404){
-				new networkMap.widget.Modal().alert('The weathermap "'+get_map_name()+' doesn\'t exist", a new one will be created', {title: 'Info'});
+
+				if(window.location.href.indexOf("is_new_map=1")==-1) // no warning if click on "+ Create new map"
+					{
+
+					if(dg('menu_maps_selected').firstChild.value && dg('menu_maps_selected').firstChild.value!="create_new_map") // jump to first map
+						{
+						window.location.replace(location.pathname+'?map='+dg('menu_maps_selected').firstChild.value);
+						return;
+						}
+					new networkMap.widget.Modal().alert('The weathermap "'+get_map_name()+'" doesn\'t exist, a new one will be created', {title: 'Info'});
+					}
+
 				this.loadObject(JSON.parse(new_map_JSON));
 			}
 			else if (request.status >= 200 && request.status < 400){
@@ -9226,11 +9242,19 @@ networkMap.extend(networkMap.Graph.Module.Settings, {
 		
 
 
+
+		accordionGroup.appendChild(new networkMap.widget.TextInput('Map name',
+		graphProperties.get('mapname') )
+		.addEvent('change', function(e){
+				graphProperties.set('mapname', e.target.value);change_map_name=1;
+		}.bind(this)));
+
+
 		accordionGroup.appendChild(new networkMap.widget.GridInput('Grid', {
 			enabled: graphProperties.get('gridEnabled'),
 			grid: graphProperties.get('grid')
 		}).addEvent('change', function(e){
-				graphProperties.set({'grid': e.value.grid, 'gridEnabled': e.value.enabled});	
+				graphProperties.set({'grid': e.value.grid, 'gridEnabled': e.value.enabled});
 		}.bind(this)));
 		
 
@@ -9249,6 +9273,16 @@ networkMap.extend(networkMap.Graph.Module.Settings, {
 			graphProperties.set('backgroundColor', color);
 
 	}.bind(this)));
+
+
+	var buttondelete = document.createElement('input')
+	buttondelete.type ="button"
+	buttondelete.value ="Delete map"
+	buttondelete.className ="btn btn-danger"
+	buttondelete.style.color ="#fff"
+	buttondelete.style.marginTop ="20px"
+	buttondelete.onclick = function(){delete_map()}; 
+	accordionGroup.appendChild(buttondelete);
 
 
 

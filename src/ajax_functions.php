@@ -42,10 +42,79 @@ if($todo=="save_map")
 	check_need_password();
 	save_map();
 	}
+if($todo=="get_all_maps")
+	{
+	get_all_maps();
+	}
+if($todo=="new_map_name")
+	{
+	new_map_name();
+	}
+if($todo=="delete_map")
+	{
+	delete_map();
+	}
 
 
+function delete_map()
+{
+if(isset($_POST["map_name"]))
+	$map_name = $_POST["map_name"];
 
 
+if (strpos($map_name, '..') !== false) die('Error filename');
+if (strpos($map_name, '/') !== false) die('Error filename');
+if (strpos($map_name, '\\') !== false) die('Error filename');
+
+$mapfile = realpath(dirname(__FILE__)) . '/map/'.$map_name.'.json';
+
+if(!is_file($mapfile))
+	die('map not deleted');
+
+unlink($mapfile);
+
+echo "ok";
+}
+
+function new_map_name()
+{
+for($i=1;$i<10000;$i++)
+	{
+	if(!is_file( realpath(dirname(__FILE__)) . "/map/map$i.json"))
+		break;
+	}
+echo "map$i";
+}
+
+function get_all_maps()
+{
+$tab_maps=[];
+
+foreach (glob(realpath(dirname(__FILE__)) . '/map/'."*.json") as $filename) {
+
+	$tab_maps[substr(basename($filename), 0, -5)] = htmlentities(get_map_name($filename));
+	}
+
+
+array_multisort($tab_maps); // sort by value
+
+echo json_encode($tab_maps);
+}
+
+function get_map_name($file)
+{
+$JSONmap = file_get_contents ( $file);
+
+$objmap = json_decode($JSONmap);
+
+$mapname=substr(basename($file), 0, -5);
+
+if(isset($objmap->defaults->graph->mapname))
+	{
+	$mapname=$objmap->defaults->graph->mapname;
+	}
+return $mapname;
+}
 
 function save_map()
 {

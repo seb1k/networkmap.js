@@ -26,6 +26,65 @@ var link_selected = false;
 setInterval(function(){ warning_bug_matrix(); }, 700);
 
 
+
+
+function delete_map()
+{
+if (window.confirm("Are you sure you want to delete this map ?")) {
+    var ret = get_POST_data("ajax_functions.php","todo=delete_map&map_name="+get_map_name())
+    if(ret == "ok")
+        {
+        window.location.replace(location.pathname);
+        }
+    else
+        alert(ret)
+     
+}
+}
+
+function get_menu_inner()
+{
+
+var ret = get_POST_data("ajax_functions.php","todo=get_all_maps")
+var maps = JSON.parse(ret)
+
+
+var HTML =""
+HTML ="<select style='max-width:180px;font-size: 80%;' id='menu_maps_selected' onchange='menu_click_map(this)' onclick='event.stopPropagation();'>"
+
+for (var map in maps) {
+    HTML+="<option value='"+map+"'>"+maps[map]+"</option>"
+    }
+
+HTML+="<option value='create_new_map' >+ Create new map</option></select>"
+
+setTimeout(function(){dg('menu_maps_selected').value=get_map_name(), 50});
+return HTML
+}
+
+function menu_click_map(e)
+{
+if(e.value=="create_new_map")
+	{
+    menu_new_map();
+    return;
+    }
+
+window.location.replace(location.pathname+'?map='+e.value);
+}
+function menu_new_map()
+{
+var ret = get_POST_data("ajax_functions.php","todo=new_map_name")
+
+window.location.replace(location.pathname+'?map='+ret+"&is_new_map=1");
+}
+
+function go_new_map()
+{
+var pass_input=document.querySelector('#map_name')
+pass_input.closest('.modal').remove()
+}
+
 function clean_edit()
 {
 triggerEvent(map.svg.node,'click')
@@ -91,6 +150,9 @@ function click_div_grey()
 {
 dg('div_grey').style.display="none"
 dg('menu_overlay').style.display="none"
+
+if(document.querySelector('#map_name'))
+	document.querySelector('#map_name').closest('.modal').remove()
 }
 
 function choose_image(src)
@@ -120,7 +182,7 @@ for(var i=0;i<elem.files.length;i++)
 
 function get_map_name()
 {
-var map_name = "weathermap"
+var map_name = "map1"
 if($_get('map'))
     map_name = $_get('map');
 return map_name
@@ -170,6 +232,9 @@ for(var i=0;i<map.links.length;i++)
 // go request
 //map.batchUpdate()
 */
+
+if(change_map_name)
+    location.reload()
 }
 
 
@@ -1111,6 +1176,7 @@ function $_get(name){
     if(name=(new RegExp('[?#&]'+encodeURIComponent(name)+'=([^&]*)')).exec(param))
         return decodeURIComponent(name[1]);
     }
+
 
 log = function() {    return Function.prototype.bind.call(console.log, console);}();
 warn = function() {    return Function.prototype.bind.call(console.warn, console);}();
