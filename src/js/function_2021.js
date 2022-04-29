@@ -32,6 +32,8 @@ function delete_map()
 {
 if (window.confirm("Are you sure you want to delete this map ?")) {
     var ret = get_POST_data("ajax_functions.php","todo=delete_map&map_name="+get_map_name())
+    if(check_need_password(ret,"delete_map()")) return;
+
     if(ret == "ok")
         {
         window.location.replace(location.pathname);
@@ -39,8 +41,9 @@ if (window.confirm("Are you sure you want to delete this map ?")) {
     else
         alert(ret)
      
+    }
 }
-}
+
 
 function get_menu_inner()
 {
@@ -1068,6 +1071,10 @@ var interval_go_grab_data = false;
 function go_interval()
 {
 clearInterval(interval_go_grab_data);
+
+if(!map.properties.properties.refreshInterval)
+    map.properties.properties.refreshInterval=30
+
 interval_go_grab_data = setInterval(function(){go_grab_data(); }, map.properties.properties.refreshInterval*1000);
 go_grab_data();
 }
