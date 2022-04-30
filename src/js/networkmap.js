@@ -1,12 +1,9 @@
 
-
 var new_map_JSON='{"defaults":{"graph":{"utilizationLabels":{"enabled":true,"fontSize":12,"padding":3},"grid":{"xy":10},"gridEnabled":true,"refreshInterval":30,"backgroundColor":"#fafafa"},"node":{},"link":{}},"nodes":[{"id":"node4","name":"node4","x":770,"y":310,"renderer":"rect","image":"test.png","label":{"position":"internal","visable":"true"},"padding":"12"},{"id":"node7","name":"Internet","x":580,"y":140,"renderer":"rect","label":{"position":"internal","visable":"true"},"padding":"12","bgImage":"cloud120.png"},{"id":"node1","name":"node1","x":960,"y":180,"renderer":"rect","label":{"position":"internal","visable":"true"},"padding":"12"},{"id":"node2","name":"node2","x":890,"y":440,"renderer":"rect","label":{"position":"internal","visable":"true"},"padding":"12"}],"links":[{"nodeA":{"id":"node7","name":"Gi0\/1","requestUrl":"http:\/\/random_data","edge":{"point":{"x":644,"y":199},"pointer":{"x":4,"y":21},"direction":{"x":0,"y":1}},"error":""},"nodeB":{"id":"node4","name":"Gi0\/1","requestUrl":"http:\/\/random_data","error":""}},{"nodeA":{"id":"node4","name":"Gi0\/1","requestUrl":"http:\/\/random_data","error":""},"nodeB":{"id":"node1","name":"Gi0\/1","requestUrl":"http:\/\/random_data","error":""}},{"nodeA":{"id":"node2","name":"Gi0\/1","requestUrl":"http:\/\/random_data","error":"","edge":{"point":{"x":914.5,"y":460},"pointer":{"x":-9.75,"y":-0.5},"direction":{"x":-0.9989968228313574,"y":0.04478111178670846}}},"nodeB":{"id":"node4","name":"Gi0\/1","requestUrl":"http:\/\/random_data","error":""}}]}'
 
 var change_map_name = 0;
-
-
-
-
+var link_selected =false;
+var ondrag_circle=false;
 
 
 /*!
@@ -4737,7 +4734,7 @@ return SVG
   // start dragging
   DragHandler.prototype.start = function(e){
 
-	
+
     // check for left button
     if(e.type == 'click'|| e.type == 'mousedown' || e.type == 'mousemove'){
       if((e.which || e.buttons) != 1){
@@ -4745,6 +4742,7 @@ return SVG
       }
     }
   
+
     var _this = this
 
     // fire beforedrag event
@@ -6583,6 +6581,7 @@ networkMap.extend(networkMap.widget.Select, {
 	},
 
 	getSelected: function(){
+		log('getSelected')
 		return (this.input.selectedIndex !== -1) ? this.input.options[this.input.selectedIndex].value : null; 
 	},
 
@@ -7536,7 +7535,7 @@ networkMap.extend(networkMap.SettingsManager, {
 		
 		var menu_inner = get_menu_inner()
 		
-		triggerDIV.innerHTML = '<span class="nm-icon nm-icon-menu"></span><a class="nm-label">'+menu_inner+'</a>';
+		triggerDIV.innerHTML = '<span class="nm-icon nm-icon-menu"></span><a class="nm-label" >'+menu_inner+'</a>';
 		
 		
 		triggerDIV.addEventListener('click', this.toggle.bind(this));
@@ -8876,10 +8875,16 @@ networkMap.extend(networkMap.Graph, {
 	},
 	
 	_clickHandler: function(e){
+
 		if (this._mode !== 'edit'){
 			return;
 		}
-		
+
+		if(ondrag_circle)
+			{
+			return;
+			}
+
 		if (e.target.instance === this.svg || e.target.instance === this.graph){
 			this.settings.displayDefaultView();
 		}
@@ -9233,11 +9238,11 @@ networkMap.extend(networkMap.Graph.Module.Settings, {
 		var changeHandler = function(defaults, key){
 
 			return function(e, widget){
-							log('changeHandler1 '+widget.value())
 				defaults.set(key, widget.value());
 			}.bind(this);
 		}.bind(this);
 	
+
 		accordionGroup = container.add('Map properties',0,0);
 		
 
@@ -10527,6 +10532,15 @@ networkMap.extend(networkMap.LinkPath, {
 	
 	
 	_clickHandler: function(e){
+
+		//log(this.getLink().svg.node)
+		if(link_selected && this.getLink().svg.node == link_selected.svg.node)
+			{
+			log("debug :")
+		//	log(link_selected.svg.node)
+			return;
+			}
+		//link_selected.svg.node
 		// TODO: Move this logic to the link by sending an event 
 		if (this.getLink().mode() === 'normal' && this.properties.get('events.click')){
 			networkMap.events.click(e, this);
@@ -10545,6 +10559,7 @@ networkMap.extend(networkMap.LinkPath, {
 					this.getLink().graph.removeLink(this.getLink()); 
 				}.bind(this),
 				cancel: function(){
+					link_selected=false;
 					this.getLink().hideEdgeHandles();
 				}.bind(this),
 				editable: true,
@@ -12065,7 +12080,6 @@ networkMap.extend(networkMap.Link.Module.Edge, {
 						fill: 'none',
 						color: '#000',
 						width: 2
-		
 					});
 					
 				var directionHandle = this.directionHandle = this.svg.circle(this.size)
@@ -12136,6 +12150,7 @@ networkMap.extend(networkMap.Link.Module.Edge, {
 				edgeHandle.on('dragmove', this.onEdgeHandleMove.bind(this));
 				edgeHandle.on('dragend', this.onDragEnd.bind(this));
 				
+
 				svg.front();
 		
 				this.state = this.states.rendered;
@@ -12165,7 +12180,9 @@ networkMap.extend(networkMap.Link.Module.Edge, {
 			}
 		},
 		rendered: {
+
 			show: function(bbox){
+				log('rendered')
 				this.bbox = bbox;
 				return this.redraw();
 			},
@@ -12187,6 +12204,7 @@ networkMap.extend(networkMap.Link.Module.Edge, {
 			},
 			
 			hide: function(){
+
 				this.directionHandle.dragmove = null;
 				this.edgeHandle.dragmove = null;
 				
@@ -12213,8 +12231,11 @@ networkMap.extend(networkMap.Link.Module.Edge, {
 		this.fireEvent('dragstart');
 	},
 	
-	onDragEnd: function(){
+	onDragEnd: function(event){
+
+		setTimeout(function() {	ondrag_circle=false; }, 100) // Debug when mousedown outside circle
 		
+
 		// DEBUG POINTER (recenter pointer to the middle of the node)
 		if(this.getUserDefined())
 			{
@@ -12241,6 +12262,10 @@ networkMap.extend(networkMap.Link.Module.Edge, {
 	},
 
 	onDirectionHandleMove: function(event){
+
+
+		ondrag_circle=true;
+
 		var edge = this.getEdge();
 
 
@@ -12263,6 +12288,8 @@ networkMap.extend(networkMap.Link.Module.Edge, {
 	
 	
 	onEdgeHandleMove: function(event){
+		
+		ondrag_circle=true;
 		
 		var edge = this.getEdge();
 
