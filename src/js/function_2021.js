@@ -583,8 +583,9 @@ for(var i=0;i<ifaces.length;i++)
         opt.selected = 'selected';
 	select_elem.add(opt, null);
 	}
-
-
+	
+select_elem.classList.add("fade-in-elem");
+setTimeout(function(){select_elem.classList.remove("fade-in-elem")}, 300);
 }
 
 
