@@ -3,14 +3,10 @@
 Changelog May 2022 : Major debug + UI improvement
 
 
-I needed a weathermap network map tool for my job... [networkmap.js](https://github.com/otm/networkmap.js) had a good design, so I used it.
+## weathermap network tool 
 
-But it's buggy as HELL !
+From [networkmap.js](https://github.com/otm/networkmap.js)
 
-<br/>
-I corrected bugs and added a lot of features...
-<br/>
-<br/><br/>
 
 ![screenshot](img/networkmap.png)
 
