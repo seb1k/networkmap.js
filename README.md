@@ -1,6 +1,9 @@
 
 
-I needed a network map tool for my job... [networkmap.js](https://github.com/otm/networkmap.js) had a good design, so I used it.
+EDIT : May 2022 : Major debug + UI improvement
+
+
+I needed a weathermap network map tool for my job... [networkmap.js](https://github.com/otm/networkmap.js) had a good design, so I used it.
 
 But it's buggy as HELL !
 
