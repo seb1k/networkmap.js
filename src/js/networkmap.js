@@ -10533,11 +10533,9 @@ networkMap.extend(networkMap.LinkPath, {
 	
 	_clickHandler: function(e){
 
-		//log(this.getLink().svg.node)
+
 		if(link_selected && this.getLink().svg.node == link_selected.svg.node)
 			{
-			log("debug :")
-		//	log(link_selected.svg.node)
 			return;
 			}
 		//link_selected.svg.node
@@ -12182,7 +12180,6 @@ networkMap.extend(networkMap.Link.Module.Edge, {
 		rendered: {
 
 			show: function(bbox){
-				log('rendered')
 				this.bbox = bbox;
 				return this.redraw();
 			},
@@ -12231,7 +12228,7 @@ networkMap.extend(networkMap.Link.Module.Edge, {
 		this.fireEvent('dragstart');
 	},
 	
-	onDragEnd: function(event){
+	onDragEnd: function(){
 
 		setTimeout(function() {	ondrag_circle=false; }, 100) // Debug when mousedown outside circle
 		
