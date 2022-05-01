@@ -5,8 +5,6 @@ Changelog May 2022 : Major debug + UI improvement
 
 ## weathermap network tool 
 
-From [networkmap.js](https://github.com/otm/networkmap.js)
-
 
 ![screenshot](img/networkmap.png)
 
@@ -51,3 +49,7 @@ $password = "YOUR_PASSWORD_HERE";
 
 <br/><br/><br/>
 SVG set from : https://github.com/jb-stack/Dia-vrt-sheets
+
+
+Original project : [networkmap.js](https://github.com/otm/networkmap.js)
+
