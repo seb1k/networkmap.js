@@ -10548,7 +10548,6 @@ networkMap.extend(networkMap.LinkPath, {
 			
 			// TODO: This is temporary code to test a feature
 			this.getLink().drawEdgeHandles();
-			
 					
 			this.mediator.publish('edit', [new networkMap.event.Configuration({
 				deletable: true,
@@ -10569,6 +10568,8 @@ networkMap.extend(networkMap.LinkPath, {
 				type: 'link',
 				targetName: this.properties.get('name')
 			})]);
+
+			link_selected = this.getLink();
 		}
 	},
 	
@@ -11912,7 +11913,6 @@ networkMap.extend(networkMap.Link.Module.Settings, {
 			}.bind(this));
 		}.bind(this);
 		
-		link_selected = link;
 
 		container.wrapper.insertAdjacentHTML('beforeend',"<div id='simple_menu_html'>"+simple_menu_html(link)+"</div>")
 			
@@ -12230,7 +12230,7 @@ networkMap.extend(networkMap.Link.Module.Edge, {
 	
 	onDragEnd: function(){
 
-		setTimeout(function() {	ondrag_circle=false; }, 100) // Debug when mousedown outside circle
+		setTimeout(function() {	ondrag_circle=false; }, 10) // Debug when mousedown outside circle
 		
 
 		// DEBUG POINTER (recenter pointer to the middle of the node)
