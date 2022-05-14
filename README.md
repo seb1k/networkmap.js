@@ -1,8 +1,5 @@
 
 
-Changelog May 2022 : Major debug + UI improvement
-
-
 ## weathermap network tool 
 
 
@@ -45,6 +42,8 @@ Add your password in the config.php file :
 $password = "YOUR_PASSWORD_HERE";
 
 ```
+
+Changelog May 2022 : Major debug + UI improvement
 
 
 <br/><br/><br/>
