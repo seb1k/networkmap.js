@@ -8,10 +8,7 @@ A network weathermap to create a map of your network and request it built in PHP
 
 ![screenshot](img/fiber2.png)
 
-You can now :
-
-- Create networkmaps
-- Use multiple networkmaps
+- Create and use use multiple networkmaps
 - Do requests from your browser ( and the server when CORS is blocking the request )
 - Request with HTTP, SNMP, use .rrd file.
 - Use a password to prevent unwanted changes
