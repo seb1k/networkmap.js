@@ -1,7 +1,8 @@
 
 
-## weathermap network tool 
+## Weathermap network tool 
 
+A network weathermap to create a map of your network and request it build in PHP/Javasript.
 
 ![screenshot](img/networkmap.png)
 
