@@ -2,7 +2,7 @@
 
 ## Weathermap network tool 
 
-A network weathermap to create a map of your network and request it build in PHP/Javasript.
+A network weathermap to create a map of your network and request it built in PHP/Javasript.
 
 ![screenshot](img/networkmap.png)
 
